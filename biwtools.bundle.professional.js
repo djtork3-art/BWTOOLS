@@ -2278,7 +2278,7 @@ button:focus-visible,
 }
 
 .bwo-fab-menu-version::after {
-  content: "v1.0.60 radar de mercado";
+  content: "v1.0.61 pujas activas";
   font-size: 10px;
 }
 
@@ -2383,6 +2383,25 @@ button:focus-visible,
 .bwo-market-confidence-media { color: #f3d99a; background: rgba(216,166,70,.13); }
 .bwo-market-confidence-baja { color: #ffc0b7; background: rgba(255,128,108,.13); }
 
+.bwo-market-live-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.bwo-market-live-refresh { padding: 6px 10px; border: 1px solid rgba(255,255,255,.14); border-radius: 8px; color: #fff; background: rgba(255,255,255,.055); cursor: pointer; font: 800 9px/1.2 var(--bwo-font-body); }
+.bwo-market-live-refresh:hover { border-color: rgba(240,45,73,.48); background: rgba(240,45,73,.13); }
+.bwo-market-live-refresh:disabled { opacity: .5; cursor: wait; }
+.bwo-market-live-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0 0 12px; }
+.bwo-market-live-stat { padding: 10px 12px; border: 1px solid rgba(255,255,255,.075); border-radius: 9px; background: rgba(0,0,0,.18); }
+.bwo-market-live-stat span { display: block; margin-bottom: 3px; color: var(--bwo-muted); font-size: 8px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.bwo-market-live-stat strong { color: #fff; font-size: 15px; font-variant-numeric: tabular-nums; }
+.bwo-market-live-amount { color: var(--bwo-green); font-weight: 900; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bwo-market-live-status { display: inline-flex; padding: 3px 7px; border: 1px solid rgba(101,212,122,.25); border-radius: 999px; color: #baf3c5; background: rgba(101,212,122,.11); font-size: 9px; font-weight: 800; }
+.bwo-market-model { margin-top: 14px; padding-top: 13px; border-top: 1px solid rgba(255,255,255,.08); }
+.bwo-market-model-title { margin: 0 0 4px; color: #fff; font-size: 13px; }
+.bwo-market-model-copy { margin: 0 0 10px; color: var(--bwo-muted); font-size: 10px; line-height: 1.45; }
+.bwo-bids-history { margin-top: 14px; border: 1px solid rgba(255,255,255,.08); border-radius: 11px; background: rgba(0,0,0,.14); }
+.bwo-bids-history > summary { padding: 12px 14px; color: #d7dbe3; cursor: pointer; font-size: 11px; font-weight: 800; list-style-position: inside; }
+.bwo-bids-history[open] > summary { border-bottom: 1px solid rgba(255,255,255,.08); }
+.bwo-bids-history-body { padding: 13px; }
+.bwo-market-api-note { margin: 10px 0 0; padding: 9px 11px; border-left: 3px solid var(--bwo-green); color: #bfc8c1; background: rgba(101,212,122,.055); font-size: 10px; line-height: 1.5; }
+
 @keyframes bwo-bids-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes bwo-bids-in { from { opacity: 0; transform: translate(-50%, 12px) scale(.985); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
 
@@ -2393,6 +2412,8 @@ button:focus-visible,
   .bwo-bids-body { padding: 12px; }
   .bwo-bids-stats { grid-template-columns: 1fr; }
   .bwo-bids-filters { grid-template-columns: 1fr; }
+  .bwo-market-radar-head { flex-direction: column; }
+  .bwo-market-live-summary { grid-template-columns: 1fr; }
 }
 
 /* En escritorio el menú se abre desde la navbar; la X flotante solo aparece mientras está abierto. */
@@ -3029,14 +3050,110 @@ function bwoManagerName(e,t){let n=e?.[String(t)]??e?.[t];return n?.name??`Manag
 function bwoBidRowData(e,t,n){let r=bwoCatalogPlayer(t,e.player_ref_id),o=Number(e.amount??0),a=Number(e.market_price??r?.price??0),i=o-a,l=a>0?i/a*100:null;return{raw:e,manager:bwoManagerName(n,e.manager_id),managerId:String(e.manager_id),player:r?.name??`Jugador ${e.player_ref_id}`,amount:o,market:a,delta:i,pct:l,won:e.won===!0,date:e.occurred_at??"",timestamp:new Date(e.occurred_at??0).getTime()||0}}
 function bwoSetBidsNavActive(e){document.querySelectorAll("[data-bwo-bids-nav]").forEach(t=>{t.classList.toggle("active",e),t.classList.toggle("is-active",e),t.setAttribute("aria-expanded",String(e)),e?t.setAttribute("aria-current","page"):t.removeAttribute("aria-current")})}
 async function bwoOpenBidsPanel(){if(zv?.querySelector(".bwo-bids-panel")){bwoCloseBidsPanel();return}let e=bwoBidsNode("div","bwo-bids-backdrop"),t=bwoBidsNode("section","bwo-bids-panel");t.setAttribute("role","dialog"),t.setAttribute("aria-modal","true"),t.setAttribute("aria-labelledby","bwo-bids-title");let n=bwoBidsNode("header","bwo-bids-head"),r=bwoBidsNode("div"),o=bwoBidsNode("h2","bwo-bids-title","Pujas de rivales");o.id="bwo-bids-title";let a=bwoBidsNode("p","bwo-bids-subtitle","Histórico de pujas reveladas cuando se resolvió el mercado. Biwenger mantiene privadas las pujas que todavía están activas.");r.append(o,a);let i=bwoBidsNode("button","bwo-bids-close","×");i.type="button",i.title="Cerrar",i.setAttribute("aria-label","Cerrar pujas rivales"),i.addEventListener("click",bwoCloseBidsPanel),n.append(r,i);let l=bwoBidsNode("div","bwo-bids-body"),s=bwoBidsNode("div","bwo-bids-loading","Actualizando y preparando las pujas…");l.appendChild(s),t.append(n,l),e.addEventListener("click",bwoCloseBidsPanel),zv.append(e,t),bwoSetBidsNavActive(!0),bwoBidsEscHandler=u=>{u.key==="Escape"&&bwoCloseBidsPanel()},document.addEventListener("keydown",bwoBidsEscHandler);try{await Vg().catch(()=>{});let[u,c,f,g]=await Promise.all([jf(),H(),z(),pn().catch(()=>null)]),b=(u??[]).filter(m=>g==null||String(m.manager_id)!==String(g)).map(m=>bwoBidRowData(m,c,f.state?.players??{})).sort((m,d)=>d.timestamp-m.timestamp);if(!t.isConnected)return;l.replaceChildren();if(b.length===0){let m=bwoBidsNode("div","bwo-bids-empty");m.append(bwoBidsNode("span",null,"Aún no hay pujas rivales reveladas en esta temporada. Se irán incorporando al resolverse nuevos mercados.")),l.appendChild(m);return}let p=bwoBidsNode("div","bwo-bids-stats"),y=bwoBidsNode("div","bwo-bids-filters"),w=bwoBidsNode("select","bwo-bids-filter"),m=bwoBidsNode("option",null,"Todos los rivales");m.value="",w.appendChild(m);let d=[...new Map(b.map(E=>[E.managerId,E.manager])).entries()].sort((E,P)=>E[1].localeCompare(P[1],"es"));for(let[E,P]of d){let T=bwoBidsNode("option",null,P);T.value=E,w.appendChild(T)}w.setAttribute("aria-label","Filtrar por rival");let v=bwoBidsNode("select","bwo-bids-filter");v.setAttribute("aria-label","Filtrar por resultado");for(let[E,P]of[["","Todos los resultados"],["won","Pujas ganadoras"],["lost","Pujas no ganadoras"]]){let T=bwoBidsNode("option",null,P);T.value=E,v.appendChild(T)}let S=bwoBidsNode("input","bwo-bids-filter");S.type="search",S.placeholder="Buscar jugador o rival…",S.setAttribute("aria-label","Buscar jugador o rival"),y.append(w,v,S);let x=bwoBidsNode("div","bwo-bids-table-wrap"),C=bwoBidsNode("table","bwo-bids-table"),N=bwoBidsNode("thead"),_=bwoBidsNode("tr");for(let E of["Rival","Jugador","Puja","Valor","Diferencia","Resultado","Fecha"])_.appendChild(bwoBidsNode("th",null,E));N.appendChild(_);let L=bwoBidsNode("tbody");C.append(N,L),x.appendChild(C);let I=bwoBidsNode("p","bwo-bids-foot","Los importes proceden del tablón público de la liga. “No ganó” indica que el rival pujó, pero otro usuario presentó una oferta superior.");l.append(p,y,x,I);function M(E,P){let T=bwoBidsNode("article","bwo-bids-stat");T.append(bwoBidsNode("span","bwo-bids-stat-label",E),bwoBidsNode("strong","bwo-bids-stat-value",P)),p.appendChild(T)}function B(){let E=w.value,P=v.value,T=S.value.trim().toLocaleLowerCase("es"),O=b.filter(k=>(!E||k.managerId===E)&&(!P||P==="won"&&k.won||P==="lost"&&!k.won)&&(!T||`${k.manager} ${k.player}`.toLocaleLowerCase("es").includes(T)));p.replaceChildren();let R=new Set(O.map(k=>k.managerId)).size,F=O.length?O.reduce((k,G)=>k+G.amount,0)/O.length:0,U=O.filter(k=>k.won).length;M("Pujas visibles",O.length.toLocaleString("es-ES")),M("Rivales",R.toLocaleString("es-ES")),M("Puja media",bwoBidsMoney(F));L.replaceChildren();for(let k of O.slice(0,300)){let G=bwoBidsNode("tr"),Q=bwoBidsNode("td","bwo-bids-manager",k.manager),Y=bwoBidsNode("td","bwo-bids-player",k.player),J=bwoBidsNode("td","bwo-bids-money",bwoBidsMoney(k.amount)),ee=bwoBidsNode("td","bwo-bids-money",k.market>0?bwoBidsMoney(k.market):"—"),te=k.market>0?`${k.delta>=0?"+":"−"}${bwoBidsMoney(Math.abs(k.delta))} · ${k.pct>=0?"+":""}${k.pct.toFixed(1)}%`:"—",ne=bwoBidsNode("td",`bwo-bids-delta ${k.market<=0?"bwo-bids-neutral":k.delta>=0?"bwo-bids-positive":"bwo-bids-negative"}`,te),re=bwoBidsNode("td"),oe=bwoBidsNode("span",`bwo-bids-result ${k.won?"bwo-bids-result-won":"bwo-bids-result-lost"}`,k.won?"Ganó":"No ganó"),ae=bwoBidsNode("td","bwo-bids-date",bwoBidsDate(k.date));re.appendChild(oe),G.append(Q,Y,J,ee,ne,re,ae),L.appendChild(G)}if(O.length===0){let k=bwoBidsNode("tr"),G=bwoBidsNode("td","bwo-bids-empty","No hay pujas que coincidan con los filtros.");G.colSpan=7,k.appendChild(G),L.appendChild(k)}I.textContent=`Mostrando ${Math.min(O.length,300).toLocaleString("es-ES")} de ${O.length.toLocaleString("es-ES")} pujas filtradas · ${U.toLocaleString("es-ES")} ganadoras. Datos del tablón público de la liga.`}w.addEventListener("change",B),v.addEventListener("change",B),S.addEventListener("input",B),B(),i.focus()}catch(u){if(!t.isConnected)return;l.replaceChildren();let c=bwoBidsNode("div","bwo-bids-empty","No se pudieron cargar las pujas ahora mismo. Abre de nuevo el panel después de que termine la sincronización.");l.appendChild(c),console.warn("[biwtools] Error al abrir las pujas rivales:",u)}}
-async function bwoAppendCurrentMarketRadar(){let e=zv?.querySelector(".bwo-bids-panel"),t=e?.querySelector(".bwo-bids-body");if(!e||!t||t.querySelector(".bwo-market-radar"))return;e.querySelector(".bwo-bids-title")&&(e.querySelector(".bwo-bids-title").textContent="Radar de pujas"),e.querySelector(".bwo-bids-subtitle")&&(e.querySelector(".bwo-bids-subtitle").textContent="Mercado actual estimado con el historial público de la liga, seguido de las pujas ya reveladas.");let n=bwoBidsNode("section","bwo-market-radar"),r=bwoBidsNode("div","bwo-market-radar-head"),o=bwoBidsNode("div"),a=bwoBidsNode("h3","bwo-market-radar-title","Radar del mercado actual"),i=bwoBidsNode("p","bwo-market-radar-copy","Calcula cuánto podría ser necesario pujar según el comportamiento histórico de cada rival, su capacidad máxima y la posición del jugador."),l=bwoBidsNode("span","bwo-market-radar-badge","Estimación con datos reales");o.append(a,i),r.append(o,l),n.appendChild(r);let s=S0();if(s.length===0){let $=bwoBidsNode("div","bwo-market-radar-empty","Para analizar los jugadores actuales, abre primero la sección Mercado de Biwenger y después vuelve a Herramientas → Ver pujas."),K=bwoBidsNode("button","bwo-market-radar-go","Ir al Mercado");K.type="button",K.addEventListener("click",()=>document.querySelector("app-nav a[href='/market']")?.click()),$.appendChild(K),n.appendChild($),t.insertBefore(n,t.firstChild);return}let[u,c,f,g]=await Promise.all([Rf(),og(),pn().catch(()=>null),H()]),b=c.filter($=>f==null||String($.id)!==String(f)),p=Au(u),y=await Promise.all(s.map(async $=>{let K=$.detail.playerId?g.get($.detail.playerId)??g.get(String($.detail.playerId)):null,[ie,ue]=await Promise.all([$.detail.playerId?Mr($.detail.playerId).catch(()=>null):null,$.detail.playerId?pe($.detail.playerId).catch(()=>null):null]),ce={trend7d:ie&&ie.length>=2?Ho(ie,new Date().toISOString()):null,titular:ue?.titular??null},fe={};for(let Le of b)fe[Le.id]=p($.detail.price,Le.maxBid,Le.id,ce);let he=fg({price:$.detail.price,position:$.detail.position??K?.position,rivals:b,estimates:fe}),ve=he?vg($.detail.price,u,he.coveredRivalId?fe[he.coveredRivalId]??null:null):{level:"baja",detail:"Todavía no existe suficiente historial para calcular una puja competitiva."};return{name:$.detail.name??K?.name??"Jugador",price:$.detail.price,capable:b.filter(Le=>Le.maxBid>=$.detail.price).length,total:b.length,recommended:he?.amount??null,safe:he?.safeAmount??null,confidence:ve.level,detail:ve.detail}}));let w=bwoBidsNode("div","bwo-bids-table-wrap"),m=bwoBidsNode("table","bwo-market-radar-table"),d=bwoBidsNode("thead"),v=bwoBidsNode("tr");for(let $ of["Jugador","Valor","Competencia","Puja competitiva","Puja segura","Confianza"])v.appendChild(bwoBidsNode("th",null,$));d.appendChild(v);let S=bwoBidsNode("tbody");for(let $ of y){let K=bwoBidsNode("tr"),ie=bwoBidsNode("td","bwo-market-radar-player",$.name),ue=bwoBidsNode("td","bwo-bids-money",bwoBidsMoney($.price)),ce=bwoBidsNode("td",null,`${$.capable}/${$.total} pueden pujar`),fe=bwoBidsNode("td","bwo-market-radar-rec",$.recommended!=null?bwoBidsMoney($.recommended):"Sin datos"),he=bwoBidsNode("td","bwo-market-radar-safe",$.safe!=null?bwoBidsMoney($.safe):"—"),ve=bwoBidsNode("td"),Le=bwoBidsNode("span",`bwo-market-confidence bwo-market-confidence-${$.confidence}`,$.confidence);Le.title=$.detail,ve.appendChild(Le),K.append(ie,ue,ce,fe,he,ve),S.appendChild(K)}m.append(d,S),w.appendChild(m),n.appendChild(w);let x=bwoBidsNode("p","bwo-market-radar-note","Importante: Biwenger no publica las cantidades de las pujas activas de otros managers. “Competitiva” y “segura” son estimaciones estadísticas basadas en pujas anteriores reveladas; no son pujas actuales interceptadas ni garantizan ganar."),C=bwoBidsNode("p","bwo-bids-foot",`Modelo calculado con ${u.observations.length.toLocaleString("es-ES")} pujas históricas y ${b.length.toLocaleString("es-ES")} rivales sincronizados.`);n.append(x,C),t.insertBefore(n,t.firstChild)}
+async function bwoAppendCurrentMarketRadar(){/* Sustituida más abajo por el lector directo de /api/v2/market. */}
+
+var bwoLiveMarketCache=null,bwoLiveMarketAt=0;
+async function bwoFetchLiveMarket(e=!1){
+  if(!e&&bwoLiveMarketCache&&Date.now()-bwoLiveMarketAt<1e4)return bwoLiveMarketCache;
+  let t=await fetch(`${qi}/market`,{headers:await Hi(),cache:"no-store"});
+  if(!t.ok)throw new Error(`getMarket failed: ${t.status} ${await t.text()}`);
+  return bwoLiveMarketCache=await t.json(),bwoLiveMarketAt=Date.now(),bwoLiveMarketCache
+}
+function bwoLiveId(e){
+  if(e==null)return null;
+  if(typeof e==="string"||typeof e==="number")return String(e);
+  for(let t of["id","userID","userId","user_id","fromID","fromId","from_id","playerID","playerId","player_id"])
+    if(e[t]!=null&&typeof e[t]!=="object")return String(e[t]);
+  return null
+}
+function bwoLiveName(e){return e&&typeof e==="object"?(e.name??e.username??e.teamName??e.title??null):null}
+function bwoLiveNumber(e,t){
+  for(let n of t){let r=e?.[n];if(r!=null&&r!==""&&typeof r!=="object"&&Number.isFinite(Number(r)))return Number(r)}
+  return null
+}
+function bwoLivePlayerRefs(e){
+  if(!e||typeof e!=="object")return[];
+  let t=[];
+  for(let n of["requestedPlayers","requested_players","players","player","playerID","playerId","player_id","footballPlayer","footballPlayerId"]){
+    let r=e[n];if(r==null)continue;
+    for(let o of(Array.isArray(r)?r:[r])){let a=bwoLiveId(o);a!=null&&t.push({id:a,name:bwoLiveName(o),raw:o})}
+  }
+  return[...new Map(t.map(n=>[n.id,n])).values()]
+}
+function bwoLiveEpoch(e){let t=Number(e);return Number.isFinite(t)&&t>0?t<1e12?t*1e3:t:null}
+function bwoLiveDate(e){let t=bwoLiveEpoch(e);return t?bwoBidsDate(t):"—"}
+function bwoMarketListings(e,t,n=S0()){
+  let r=e?.data??e??{},o=[],a=[];
+  for(let i of["sales","market","listings","players"]){let l=r?.[i];Array.isArray(l)&&a.push(...l)}
+  for(let i of a){
+    let l=bwoLivePlayerRefs(i);if(!l.length&&i?.id!=null&&/player/i.test(String(i?.type??"")))l=[{id:String(i.id),name:i.name??null,raw:i}];
+    for(let s of l){let u=bwoCatalogPlayer(t,s.id),c=bwoLiveNumber(i,["price","amount","marketPrice","market_price","value"])??Number(u?.price??0),f=i?.position??u?.position??null;o.push({id:s.id,name:s.name??u?.name??`Jugador ${s.id}`,price:Number(c)||0,position:f})}
+  }
+  for(let i of n){let l=String(i.detail?.playerId??""),s=l?bwoCatalogPlayer(t,l):null,u=i.detail?.name??s?.name??"Jugador del mercado",c=Number(i.detail?.price??s?.price??0),f=i.detail?.position??s?.position??null;o.push({id:l||`dom:${u}:${c}`,name:u,price:Number.isFinite(c)?c:0,position:f})}
+  return[...new Map(o.map(i=>[i.id,i])).values()]
+}
+function bwoExtractLiveMarketOffers(e,t,n,r,o){
+  let a=[],i=new Map(t.map(m=>[String(m.id),m])),l=new Map((n??[]).map(m=>[String(m.id),m.name??`Manager ${m.id}`])),s=new Set,u=/bid|offer|puja/i,c=/cancel|reject|expire|accept|complete|finish|closed|withdraw|declin/i;
+  function f(m,d,v){
+    if(!m||typeof m!=="object")return;
+    let S=String(m.status??m.state??"").toLocaleLowerCase("es");if(c.test(S))return;
+    let x=bwoLiveNumber(m,["amount","bidAmount","bid_amount","offerAmount","offer_amount","bid","value"]);if(!(x>0)&&u.test(d))x=bwoLiveNumber(m,["price"]);if(!(x>0))return;
+    let C=m.from??m.bidder??m.manager??m.buyer??m.user??null,N=bwoLiveId(C)??bwoLiveId({id:m.fromID??m.fromId??m.from_id??m.bidderID??m.bidderId??m.bidder_id??m.userID??m.userId??m.user_id}),_=bwoLiveName(C)??(N!=null?l.get(String(N)):null);if(N==null&&!_)return;
+    let L=bwoLivePlayerRefs(m);L.length||(L=v?.players??[]);if(!L.length)return;
+    for(let I of L){let M=i.get(String(I.id));if(i.size&&!M)continue;let B=bwoCatalogPlayer(o,I.id),E=I.name??M?.name??B?.name??`Jugador ${I.id}`,P=Number(M?.price??B?.price??0),T=N!=null&&r!=null&&String(N)===String(r),O=`${N??_}|${I.id}|${Math.round(x)}|${d}`;if(s.has(O))continue;s.add(O),a.push({managerId:N,manager:_??`Manager ${N}`,playerId:String(I.id),player:E,amount:x,market:P,status:S||"activa",until:m.until??m.expires??m.expiration??m.deadline??null,isSelf:T,source:d})}
+  }
+  function g(m,d="data",v={players:[]}){
+    if(m==null)return;
+    if(Array.isArray(m)){for(let[S,x]of m.entries())g(x,`${d}[${S}]`,v);return}
+    if(typeof m!=="object")return;
+    let S=bwoLivePlayerRefs(m),x={players:S.length?S:v.players};
+    for(let[C,N]of Object.entries(m)){
+      let _=`${d}.${C}`;
+      if(u.test(C)&&Array.isArray(N))for(let L of N)f(L,_,x);
+      g(N,_,x)
+    }
+  }
+  g(e);
+  return a.sort((m,d)=>d.amount-m.amount)
+}
+function bwoWrapHistoricalBids(e){
+  let t=e.querySelector(":scope > .bwo-bids-history");if(t)return t;
+  t=bwoBidsNode("details","bwo-bids-history");let n=bwoBidsNode("summary",null,"Histórico de pujas ya resueltas (abrir)"),r=bwoBidsNode("div","bwo-bids-history-body");
+  for(let o of[...e.children])r.appendChild(o);
+  return t.append(n,r),e.appendChild(t),t
+}
+function bwoMarketStat(e,t){let n=bwoBidsNode("article","bwo-market-live-stat");return n.append(bwoBidsNode("span",null,e),bwoBidsNode("strong",null,t)),n}
+function bwoMarketTable(e,t){
+  let n=bwoBidsNode("div","bwo-bids-table-wrap"),r=bwoBidsNode("table","bwo-market-radar-table"),o=bwoBidsNode("thead"),a=bwoBidsNode("tr");for(let l of e)a.appendChild(bwoBidsNode("th",null,l));o.appendChild(a);let i=bwoBidsNode("tbody");return r.append(o,i),n.appendChild(r),t.appendChild(n),i
+}
+async function bwoRenderLiveMarketModel(e,t,n,r,o){
+  if(!t.length)return;
+  let a=bwoBidsNode("section","bwo-market-model"),i=bwoBidsNode("h4","bwo-market-model-title","Estimación competitiva (separada de las pujas reales)"),l=bwoBidsNode("p","bwo-market-model-copy","Sirve como apoyo cuando la API no revela una puja rival. Se calcula con capacidad económica e histórico resuelto; no se presenta como una puja actual.");a.append(i,l);let s=bwoMarketTable(["Jugador","Valor","Rivales con capacidad","Puja competitiva","Puja segura"],a),u=Au(n);
+  for(let c of t){let f={};for(let y of r)f[y.id]=u(c.price,y.maxBid,y.id,{});let g=fg({price:c.price,position:c.position,rivals:r,estimates:f}),b=bwoBidsNode("tr");b.append(bwoBidsNode("td","bwo-market-radar-player",c.name),bwoBidsNode("td","bwo-bids-money",bwoBidsMoney(c.price)),bwoBidsNode("td",null,`${r.filter(y=>y.maxBid>=c.price).length}/${r.length}`),bwoBidsNode("td","bwo-market-radar-rec",g?.amount!=null?bwoBidsMoney(g.amount):"Sin datos"),bwoBidsNode("td","bwo-market-radar-safe",g?.safeAmount!=null?bwoBidsMoney(g.safeAmount):"—")),s.appendChild(b)
+  }
+  e.appendChild(a)
+}
+bwoAppendCurrentMarketRadar=async function(e=!1){
+  let t=zv?.querySelector(".bwo-bids-panel"),n=t?.querySelector(".bwo-bids-body");if(!t||!n)return;
+  let r=n.querySelector(":scope > .bwo-market-radar");if(r&&!e)return;r?.remove();
+  t.querySelector(".bwo-bids-title")&&(t.querySelector(".bwo-bids-title").textContent="Pujas del mercado actual");
+  t.querySelector(".bwo-bids-subtitle")&&(t.querySelector(".bwo-bids-subtitle").textContent="Pujas activas visibles para tu sesión, obtenidas directamente del mercado actual. El histórico queda separado y plegado.");
+  let o=bwoWrapHistoricalBids(n),a=bwoBidsNode("section","bwo-market-radar"),i=bwoBidsNode("div","bwo-market-radar-head"),l=bwoBidsNode("div"),s=bwoBidsNode("h3","bwo-market-radar-title","Actividad real del mercado"),u=bwoBidsNode("p","bwo-market-radar-copy","Muestra únicamente registros activos que la respuesta de Biwenger relaciona de forma explícita con un rival, un jugador actualmente en venta y una cantidad."),c=bwoBidsNode("div","bwo-market-live-actions"),f=bwoBidsNode("span","bwo-market-radar-badge","API en directo"),g=bwoBidsNode("button","bwo-market-live-refresh","Actualizar");g.type="button",g.addEventListener("click",async()=>{g.disabled=!0;try{await bwoAppendCurrentMarketRadar(!0)}finally{g.disabled=!1}}),l.append(s,u),c.append(f,g),i.append(l,c),a.appendChild(i),a.appendChild(bwoBidsNode("div","bwo-bids-loading","Consultando el mercado actual…")),n.insertBefore(a,o);
+  try{
+    let[b,p,y,w,m]=await Promise.all([bwoFetchLiveMarket(e),H(),og().catch(()=>[]),pn().catch(()=>null),Rf().catch(()=>({observations:[],byManager:new Map,byManagerPosition:new Map}))]),d=bwoMarketListings(b,p),v=bwoExtractLiveMarketOffers(b,d,y,w,p),S=v.filter(C=>!C.isSelf),x=v.filter(C=>C.isSelf);if(!a.isConnected)return;a.querySelector(".bwo-bids-loading")?.remove();
+    let C=bwoBidsNode("div","bwo-market-live-summary");C.append(bwoMarketStat("Pujas rivales activas",S.length.toLocaleString("es-ES")),bwoMarketStat("Jugadores pujados",new Set(S.map(N=>N.playerId)).size.toLocaleString("es-ES")),bwoMarketStat("Jugadores en mercado",d.length.toLocaleString("es-ES"))),a.appendChild(C);
+    if(S.length){let N=bwoMarketTable(["Rival","Jugador","Puja actual","Valor","Sobrepuja","Estado","Hasta"],a);for(let _ of S){let L=_.market>0?_.amount-_.market:null,I=bwoBidsNode("tr"),M=bwoBidsNode("td","bwo-bids-manager",_.manager),B=bwoBidsNode("td","bwo-market-radar-player",_.player),E=bwoBidsNode("td","bwo-market-live-amount",bwoBidsMoney(_.amount)),P=bwoBidsNode("td","bwo-bids-money",_.market>0?bwoBidsMoney(_.market):"—"),T=bwoBidsNode("td",L==null?"bwo-bids-neutral":L>=0?"bwo-bids-positive":"bwo-bids-negative",L==null?"—":`${L>=0?"+":"−"}${bwoBidsMoney(Math.abs(L))}`),O=bwoBidsNode("td"),R=bwoBidsNode("span","bwo-market-live-status","Activa"),F=bwoBidsNode("td","bwo-bids-date",bwoLiveDate(_.until));O.appendChild(R),I.append(M,B,E,P,T,O,F),N.appendChild(I)}a.appendChild(bwoBidsNode("p","bwo-market-api-note","Estas filas proceden de /api/v2/market y siguen activas en la respuesta actual. No se completan con ganadores pasados ni con cantidades estimadas."))}
+    else{let N=x.length?`La API devolvió ${x.length.toLocaleString("es-ES")} oferta${x.length===1?"":"s"}, pero corresponde${x.length===1?"":"n"} a tu propio usuario; no se presenta${x.length===1?"":"n"} como puja rival.`:"La respuesta actual de /api/v2/market no contiene ninguna puja rival activa visible para esta cuenta. Puede no haber pujas sobre tus ventas actuales o Biwenger puede estar ocultándolas a tu sesión.";a.appendChild(bwoBidsNode("div","bwo-market-radar-empty",N))}
+    let N=y.filter(_=>w==null||String(_.id)!==String(w));await bwoRenderLiveMarketModel(a,d,m,N,p)
+  }catch(b){if(!a.isConnected)return;a.querySelector(".bwo-bids-loading")?.remove(),a.appendChild(bwoBidsNode("div","bwo-market-radar-empty","No se pudo leer /api/v2/market con la sesión actual. Recarga Biwenger, ejecuta de nuevo el bookmark y vuelve a abrir Herramientas → Ver pujas.")),console.warn("[biwtools] Error al leer el mercado activo:",b)}
+};
 var bwoOriginalOpenBidsPanel=bwoOpenBidsPanel;
 bwoOpenBidsPanel=async function(){await bwoOriginalOpenBidsPanel();zv?.querySelector(".bwo-bids-panel")&&await bwoAppendCurrentMarketRadar().catch(e=>console.warn("[biwtools] No se pudo construir el radar actual:",e))};
 function bwoNavText(e){return(e.textContent??"").replace(/\d+/g,"").replace(/\s+/g," ").trim().toLocaleLowerCase("es")}
 function bwoNavUnit(e){let t=e;for(;t.parentElement&&t.parentElement!==document.body;){let n=t.parentElement,r=[...n.children],o=r.filter(a=>/^(inicio|liga|equipo|mercado|jornada|jugadores)$/.test(bwoNavText(a))).length;if(o>=3)return t;t=n}return e.closest("a, button, li, [role='menuitem']")??e.parentElement}
 var bwoToolsPageWanted=!1,bwoToolsPagePath=null,bwoToolsExitBound=!1,bwoToolsActiveTool=null,bwoToolsEmbedBusy=!1,bwoToolsRows=[
   {icon:"📋",name:"Actividad",description:"Histórico del mercado, fichajes, ventas y movimientos recientes de la liga."},
-  {icon:"👁️",name:"Ver pujas",description:"Radar del mercado actual con puja competitiva estimada, nivel seguro e histórico rival revelado."},
+  {icon:"👁️",name:"Ver pujas",description:"Pujas rivales activas visibles en el mercado actual, con importe real, actualización directa y estimación competitiva separada."},
   {icon:"⚽",name:"Onces",description:"Revisa alineaciones, formaciones y jugadores utilizados por cada equipo."},
   {icon:"🚑",name:"Lesionados",description:"Control de lesionados, sancionados, dudas y disponibilidad de la plantilla."},
   {icon:"🎯",name:"Recomendaciones",description:"Sugerencias de mercado calculadas según rendimiento, precio y competencia."},
@@ -3064,7 +3181,7 @@ function bwoToggleToolsMenu(){bwoOpenToolsPage()}
 function bwoPrepareBidsNavItem(e){let t=e.cloneNode(!0),n=t.matches("a")?t:t.querySelector("a");if(!n)return null;t.classList.remove("active","is-active","selected","current"),t.setAttribute("aria-selected","false"),t.dataset.bwoToolsNav="1",t.classList.add("bwo-nav-bids"),n.classList.add("bwo-nav-bids","bwo-nav-bids-trigger"),n.removeAttribute("aria-current"),n.setAttribute("href","#bwo-herramientas"),n.setAttribute("title","Abrir las herramientas de Biwtools"),n.setAttribute("aria-label","Abrir herramientas de Biwtools"),n.setAttribute("aria-haspopup","dialog"),n.setAttribute("aria-expanded","false");let r=n.querySelector("i.icon")?.cloneNode(!1)??bwoBidsNode("i");r.className="icon icon-hamburger bwo-nav-bids-native-icon",r.setAttribute("aria-hidden","true"),n.replaceChildren(r,document.createTextNode(" Herramientas "));let o=a=>{a.preventDefault(),a.stopImmediatePropagation(),bwoToggleToolsMenu()};return n.addEventListener("click",o),n.addEventListener("keydown",a=>{(a.key==="Enter"||a.key===" ")&&o(a)}),t}
 function bwoEnsureBidsNav(){let e=[...document.querySelectorAll("app-nav linear-tabs ul[role='navigation']")],t=!1;for(let n of e){if(n.querySelector(":scope > li[data-bwo-tools-nav='1']")){t=!0;continue}let r=n.querySelector(":scope > li > a[href='/players']")?.closest("li"),o=r?bwoPrepareBidsNavItem(r):null;o&&(r.insertAdjacentElement("afterend",o),t=!0)}if(t)return;let n=[],r=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);for(let o;o=r.nextNode();)if((o.textContent??"").replace(/\s+/g," ").trim().toLocaleLowerCase("es")==="jugadores"&&o.parentElement)n.push(o.parentElement);let o=n.find(a=>{let i=a.getBoundingClientRect();return a.getClientRects().length>0&&i.top>=0&&i.top<120})??n[0];if(!o)return;let a=bwoNavUnit(o);if(!a||a===document.body||a.parentElement?.querySelector(":scope > [data-bwo-tools-nav='1']"))return;let i=bwoPrepareBidsNavItem(a);i&&a.insertAdjacentElement("afterend",i)}
 function bwoEnsureBidsFabItem(){let e=zv?.querySelector(".bwo-fab-menu");if(!e){bwoSyncToolsNavState(),bwoWatchEmbeddedTool();return}if(!e.querySelector("[data-bwo-bids-fab='1']")){let t=e.querySelector(".bwo-fab-item"),n=bwoBidsNode("button","bwo-fab-item");n.type="button",n.dataset.bwoBidsFab="1",n.setAttribute("aria-label","Ver pujas de rivales");let r=bwoBidsNode("span","bwo-fab-item-icon","👁️");r.setAttribute("aria-hidden","true"),n.append(r,document.createTextNode(" Ver pujas")),n.addEventListener("click",()=>{zv.querySelector(".bwo-fab")?.click(),setTimeout(bwoOpenBidsPanel,0)}),t?t.insertAdjacentElement("afterend",n):e.appendChild(n)}bwoSyncToolsNavState(),bwoWatchEmbeddedTool()}
-globalThis.__BIWTOOLS_BALANCE_FIX__="v1.0.60-market-radar";
+globalThis.__BIWTOOLS_BALANCE_FIX__="v1.0.61-live-market-bids";
 var bwoOriginalZw=zw;
 Ri=async function(){let{state:e}=await z(),{date:t,startingBalance:n}=await qo(),r=e.balanceCorrections??{};return Object.values(e.players).filter(o=>!e.inactive[o.id]).map(o=>{let a=e.movements.filter(i=>i.player_id===o.id&&i.occurred_at>t).reduce((i,l)=>i+l.amount,0),s=Number(r[o.id]??0),u=n+a+s,c=e.teamValue[o.id];return{id:o.id,name:o.name,icon:o.icon,team_value:c?.teamValue??null,squad_size:c?.squadSize??null,team_value_change_today:c?.changeToday??null,balance:u,balance_exact:Object.prototype.hasOwnProperty.call(r,o.id)}}).sort((o,a)=>a.balance-o.balance)};
 zw=async function(){let e=await z(),t=e.state.syncState,n=t.seasonAnchorDate??null,r=t.seasonStartingBalance??null,o;try{o=await bwoOriginalZw()}catch(a){if(n!=null&&r!=null){t.seasonAnchorDate=n,t.seasonStartingBalance=r,await Cu()}throw a}let i=await z(),l=i.state.syncState,s=await Li(),u=(await qo()).date,c=await rg(s.id,u);i.state.balanceCorrections??={};if(n===u&&r!=null)l.seasonAnchorDate=n,l.seasonStartingBalance=r,l.seasonStartingBalanceLockedV3="1";else i.state.balanceCorrections={},l.seasonStartingBalanceLockedV3="1";let f=Number(l.seasonStartingBalance??0);return i.state.balanceCorrections[String(s.id)]=Math.round(s.balance-(f+c)),await Cu(),o};
