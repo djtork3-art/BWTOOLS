@@ -79,6 +79,33 @@ Error generating stack: `+a.message+`
       letter-spacing: .01em;
     }
 
+    /* Acceso nativo a las pujas rivales en la barra principal de Biwenger. */
+    .bwo-nav-bids {
+      cursor: pointer !important;
+      user-select: none;
+    }
+
+    .bwo-nav-bids .bwo-nav-bids-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 21px;
+      height: 21px;
+      margin-right: 7px;
+      border: 1px solid currentColor;
+      border-radius: 7px;
+      font-size: 12px;
+      font-style: normal;
+      line-height: 1;
+      opacity: .92;
+    }
+
+    .bwo-nav-bids:hover .bwo-nav-bids-icon,
+    .bwo-nav-bids:focus-visible .bwo-nav-bids-icon {
+      color: #fff;
+      border-color: #e0142c;
+      background: rgba(224, 20, 44, .18);
+    }
+
     @keyframes bwo-host-badge-in {
       from { opacity: 0; transform: translateY(3px) scale(.97); }
       to { opacity: 1; transform: translateY(0) scale(1); }
@@ -1960,8 +1987,94 @@ button:focus-visible,
 }
 
 .bwo-fab-menu-version::after {
-  content: "v1.0.51 saldos";
+  content: "v1.0.52 pujas";
   font-size: 10px;
+}
+
+/* Visor de pujas rivales. Vive en el mismo Shadow DOM que el resto de Biwtools. */
+.bwo-bids-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483644;
+  background: rgba(5, 6, 8, .68);
+  backdrop-filter: blur(5px);
+  animation: bwo-bids-fade 160ms ease both;
+}
+
+.bwo-bids-panel {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  z-index: 2147483645;
+  width: min(940px, calc(100vw - 28px));
+  max-height: calc(100vh - 82px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-50%);
+  color: var(--bwo-chalk);
+  background: linear-gradient(145deg, rgba(39, 39, 39, .98), rgba(20, 20, 20, .99));
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-top: 2px solid var(--bwo-accent);
+  border-radius: 18px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .62), inset 0 1px 0 rgba(255, 255, 255, .05);
+  animation: bwo-bids-in 220ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.bwo-bids-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--bwo-line);
+  background: linear-gradient(90deg, rgba(224, 20, 44, .10), transparent 48%);
+}
+
+.bwo-bids-title { margin: 0; font-size: 22px; line-height: 1.15; }
+.bwo-bids-subtitle { margin: 7px 0 0; max-width: 680px; color: var(--bwo-muted); font-size: 12px; line-height: 1.5; }
+.bwo-bids-close { width: 36px; height: 36px; flex: 0 0 auto; border: 1px solid var(--bwo-line); border-radius: 10px; color: var(--bwo-chalk); background: rgba(255,255,255,.045); cursor: pointer; font: 700 19px/1 var(--bwo-font-body); }
+.bwo-bids-close:hover { color: #fff; border-color: var(--bwo-accent); background: rgba(224,20,44,.15); }
+.bwo-bids-body { min-height: 230px; overflow: auto; padding: 16px 22px 22px; scrollbar-color: #555 #202020; }
+.bwo-bids-loading, .bwo-bids-empty { display: grid; min-height: 190px; place-items: center; color: var(--bwo-muted); text-align: center; }
+
+.bwo-bids-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+.bwo-bids-stat { padding: 12px 14px; border: 1px solid var(--bwo-line); border-radius: 12px; background: rgba(255,255,255,.035); }
+.bwo-bids-stat-label { display: block; color: var(--bwo-muted); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.bwo-bids-stat-value { display: block; margin-top: 4px; color: #fff; font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.bwo-bids-filters { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(150px, .55fr) minmax(190px, .75fr); gap: 10px; margin-bottom: 14px; }
+.bwo-bids-filter { min-width: 0; height: 40px; padding: 0 12px; color: var(--bwo-chalk); background: #222; border: 1px solid var(--bwo-line); border-radius: 10px; font: 600 12px/1 var(--bwo-font-body); outline: none; }
+.bwo-bids-filter:focus { border-color: var(--bwo-accent); box-shadow: 0 0 0 3px rgba(224,20,44,.12); }
+
+.bwo-bids-table-wrap { overflow-x: auto; border: 1px solid var(--bwo-line); border-radius: 12px; background: rgba(0,0,0,.10); }
+.bwo-bids-table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 12px; }
+.bwo-bids-table th { position: sticky; top: 0; z-index: 1; padding: 10px 12px; color: var(--bwo-muted); background: #202020; border-bottom: 1px solid var(--bwo-line); text-align: left; font-size: 10px; letter-spacing: .055em; text-transform: uppercase; }
+.bwo-bids-table td { padding: 11px 12px; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: middle; }
+.bwo-bids-table tr:last-child td { border-bottom: 0; }
+.bwo-bids-table tbody tr:hover { background: rgba(255,255,255,.035); }
+.bwo-bids-manager, .bwo-bids-player { max-width: 190px; overflow: hidden; color: #fff; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.bwo-bids-money { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bwo-bids-delta { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bwo-bids-positive { color: var(--bwo-green); }
+.bwo-bids-negative { color: var(--bwo-coral); }
+.bwo-bids-neutral { color: var(--bwo-muted); }
+.bwo-bids-result { display: inline-flex; align-items: center; min-width: 70px; justify-content: center; padding: 4px 8px; border-radius: 999px; font-size: 10px; font-weight: 800; }
+.bwo-bids-result-won { color: #bff4c8; background: rgba(95,203,114,.14); border: 1px solid rgba(95,203,114,.28); }
+.bwo-bids-result-lost { color: #b8bcc5; background: rgba(147,144,141,.10); border: 1px solid rgba(147,144,141,.22); }
+.bwo-bids-date { color: var(--bwo-muted); white-space: nowrap; }
+.bwo-bids-foot { margin: 12px 2px 0; color: var(--bwo-muted); font-size: 10px; line-height: 1.45; }
+
+@keyframes bwo-bids-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bwo-bids-in { from { opacity: 0; transform: translate(-50%, 12px) scale(.985); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+
+@media (max-width: 680px) {
+  .bwo-bids-panel { top: 10px; width: calc(100vw - 16px); max-height: calc(100vh - 20px); border-radius: 14px; }
+  .bwo-bids-head { padding: 16px; }
+  .bwo-bids-title { font-size: 19px; }
+  .bwo-bids-body { padding: 12px; }
+  .bwo-bids-stats { grid-template-columns: 1fr; }
+  .bwo-bids-filters { grid-template-columns: 1fr; }
 }
 
 .bwo-fab-item {
@@ -2539,7 +2652,19 @@ button:focus-visible,
   }
 }
 `;var A=D(re(),1),y1="biwtools-root";function h1(){let[e,t]=(0,Br.useState)(null),[n,r]=(0,Br.useState)(null),[o,a]=(0,Br.useState)(!1);(0,Br.useEffect)(()=>{function u(c){t({type:"competition",detail:c.detail})}return window.addEventListener(En,u),pn().then(r).catch(()=>{}),()=>window.removeEventListener(En,u)},[]);function i(u){t(c=>c?.type===u?null:{type:u}),a(!1)}function l(u){t(c=>({type:"lineups",teamId:u,from:c}))}function s(){e?(t(null),a(!0)):a(u=>!u)}return(0,A.jsxs)(A.Fragment,{children:[(0,A.jsxs)("div",{className:"bwo-fab-wrap",children:[(0,A.jsx)("button",{className:"bwo-fab",onClick:s,"aria-label":"Men\xFA de Biwtools",children:o?(0,A.jsx)("span",{className:"bwo-fab-x",children:"\u2715"}):(0,A.jsx)("img",{className:"bwo-fab-icon",src:`${cn}/assets/logo-icon.png`,alt:"Biwtools"})}),o&&(0,A.jsxs)(A.Fragment,{children:[(0,A.jsx)("div",{className:"bwo-fab-backdrop",onClick:()=>a(!1)}),(0,A.jsxs)("div",{className:"bwo-fab-menu",children:[(0,A.jsxs)("div",{className:"bwo-fab-menu-head",children:[(0,A.jsx)("img",{className:"bwo-fab-menu-wordmark",src:`${cn}/assets/logo-wordmark.png`,alt:"Biwtools"}),(0,A.jsxs)("span",{className:"bwo-fab-menu-version",children:["v","1.0.50"]})]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("activity"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F4CB}"})," Actividad"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("lineups"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u26BD"})," Onces"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("injuries"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F691}"})," Lesionados"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("recommendations"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F3AF}"})," Recomendaciones"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("freeAgents"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F193}"})," Jugadores libres"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("upgrades"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F500}"})," Comparador"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("finances"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F4B0}"})," Finanzas"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("diagnostics"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1FA7A}"})," Diagn\xF3stico"]})]})]})]}),e&&(0,A.jsx)("div",{className:"bwo-panel",children:e.type==="competition"?(0,A.jsx)(Du,{playerId:e.detail.playerId,price:e.detail.price,name:e.detail.name,position:e.detail.position,owned:e.detail.owned??!1,selfId:n,onClose:()=>t(null),onOpenTeamLineup:l}):e.type==="lineups"?(0,A.jsx)(zu,{onClose:()=>t(null),initialTeamId:e.teamId??null,onBackToSource:e.from?()=>t(e.from??null):void 0}):e.type==="injuries"?(0,A.jsx)(qu,{onClose:()=>t(null),onOpenTeamLineup:l}):e.type==="recommendations"?(0,A.jsx)(Uu,{onClose:()=>t(null),selfId:n}):e.type==="freeAgents"?(0,A.jsx)(Wu,{onClose:()=>t(null),selfId:n,onOpenTeamLineup:l}):e.type==="upgrades"?(0,A.jsx)(Ku,{onClose:()=>t(null)}):e.type==="finances"?(0,A.jsx)(Gu,{onClose:()=>t(null),selfId:n}):e.type==="diagnostics"?(0,A.jsx)(tc,{onClose:()=>t(null),selfId:n}):(0,A.jsx)($u,{onClose:()=>t(null),onOpenTeamLineup:l})})]})}/* Corrección de consistencia de saldos: ancla fija por temporada + ajuste exacto por usuario. */
-globalThis.__BIWTOOLS_BALANCE_FIX__="v1.0.51-multi-account";
+/* Visor de pujas: usa exclusivamente pujas que Biwenger ya hizo públicas al resolver el mercado. */
+var bwoBidsEscHandler=null;
+function bwoBidsNode(e,t,n){let r=document.createElement(e);return t&&(r.className=t),n!=null&&(r.textContent=String(n)),r}
+function bwoBidsMoney(e){let t=Number(e);return Number.isFinite(t)?`${Math.round(t).toLocaleString("es-ES")} €`:"—"}
+function bwoBidsDate(e){let t=new Date(e);return Number.isNaN(t.getTime())?"—":new Intl.DateTimeFormat("es-ES",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}).format(t)}
+function bwoCloseBidsPanel(){zv?.querySelector(".bwo-bids-backdrop")?.remove(),zv?.querySelector(".bwo-bids-panel")?.remove(),document.querySelectorAll("[data-bwo-bids-nav]").forEach(e=>{e.classList.remove("active","is-active"),e.removeAttribute("aria-current"),e.setAttribute("aria-expanded","false")}),bwoBidsEscHandler&&(document.removeEventListener("keydown",bwoBidsEscHandler),bwoBidsEscHandler=null)}
+function bwoCatalogPlayer(e,t){return e.get(t)??e.get(String(t))??e.get(Number(t))??null}
+function bwoManagerName(e,t){let n=e?.[String(t)]??e?.[t];return n?.name??`Manager ${t}`}
+function bwoBidRowData(e,t,n){let r=bwoCatalogPlayer(t,e.player_ref_id),o=Number(e.amount??0),a=Number(e.market_price??r?.price??0),i=o-a,l=a>0?i/a*100:null;return{raw:e,manager:bwoManagerName(n,e.manager_id),managerId:String(e.manager_id),player:r?.name??`Jugador ${e.player_ref_id}`,amount:o,market:a,delta:i,pct:l,won:e.won===!0,date:e.occurred_at??"",timestamp:new Date(e.occurred_at??0).getTime()||0}}
+function bwoSetBidsNavActive(e){document.querySelectorAll("[data-bwo-bids-nav]").forEach(t=>{t.classList.toggle("active",e),t.classList.toggle("is-active",e),t.setAttribute("aria-expanded",String(e)),e?t.setAttribute("aria-current","page"):t.removeAttribute("aria-current")})}
+async function bwoOpenBidsPanel(){if(zv?.querySelector(".bwo-bids-panel")){bwoCloseBidsPanel();return}let e=bwoBidsNode("div","bwo-bids-backdrop"),t=bwoBidsNode("section","bwo-bids-panel");t.setAttribute("role","dialog"),t.setAttribute("aria-modal","true"),t.setAttribute("aria-labelledby","bwo-bids-title");let n=bwoBidsNode("header","bwo-bids-head"),r=bwoBidsNode("div"),o=bwoBidsNode("h2","bwo-bids-title","Pujas de rivales");o.id="bwo-bids-title";let a=bwoBidsNode("p","bwo-bids-subtitle","Histórico de pujas reveladas cuando se resolvió el mercado. Biwenger mantiene privadas las pujas que todavía están activas.");r.append(o,a);let i=bwoBidsNode("button","bwo-bids-close","×");i.type="button",i.title="Cerrar",i.setAttribute("aria-label","Cerrar pujas rivales"),i.addEventListener("click",bwoCloseBidsPanel),n.append(r,i);let l=bwoBidsNode("div","bwo-bids-body"),s=bwoBidsNode("div","bwo-bids-loading","Actualizando y preparando las pujas…");l.appendChild(s),t.append(n,l),e.addEventListener("click",bwoCloseBidsPanel),zv.append(e,t),bwoSetBidsNavActive(!0),bwoBidsEscHandler=u=>{u.key==="Escape"&&bwoCloseBidsPanel()},document.addEventListener("keydown",bwoBidsEscHandler);try{await Vg().catch(()=>{});let[u,c,f,g]=await Promise.all([jf(),H(),z(),pn().catch(()=>null)]),b=(u??[]).filter(m=>g==null||String(m.manager_id)!==String(g)).map(m=>bwoBidRowData(m,c,f.state?.players??{})).sort((m,d)=>d.timestamp-m.timestamp);if(!t.isConnected)return;l.replaceChildren();if(b.length===0){let m=bwoBidsNode("div","bwo-bids-empty");m.append(bwoBidsNode("span",null,"Aún no hay pujas rivales reveladas en esta temporada. Se irán incorporando al resolverse nuevos mercados.")),l.appendChild(m);return}let p=bwoBidsNode("div","bwo-bids-stats"),y=bwoBidsNode("div","bwo-bids-filters"),w=bwoBidsNode("select","bwo-bids-filter"),m=bwoBidsNode("option",null,"Todos los rivales");m.value="",w.appendChild(m);let d=[...new Map(b.map(E=>[E.managerId,E.manager])).entries()].sort((E,P)=>E[1].localeCompare(P[1],"es"));for(let[E,P]of d){let T=bwoBidsNode("option",null,P);T.value=E,w.appendChild(T)}w.setAttribute("aria-label","Filtrar por rival");let v=bwoBidsNode("select","bwo-bids-filter");v.setAttribute("aria-label","Filtrar por resultado");for(let[E,P]of[["","Todos los resultados"],["won","Pujas ganadoras"],["lost","Pujas no ganadoras"]]){let T=bwoBidsNode("option",null,P);T.value=E,v.appendChild(T)}let S=bwoBidsNode("input","bwo-bids-filter");S.type="search",S.placeholder="Buscar jugador o rival…",S.setAttribute("aria-label","Buscar jugador o rival"),y.append(w,v,S);let x=bwoBidsNode("div","bwo-bids-table-wrap"),C=bwoBidsNode("table","bwo-bids-table"),N=bwoBidsNode("thead"),_=bwoBidsNode("tr");for(let E of["Rival","Jugador","Puja","Valor","Diferencia","Resultado","Fecha"])_.appendChild(bwoBidsNode("th",null,E));N.appendChild(_);let L=bwoBidsNode("tbody");C.append(N,L),x.appendChild(C);let I=bwoBidsNode("p","bwo-bids-foot","Los importes proceden del tablón público de la liga. “No ganó” indica que el rival pujó, pero otro usuario presentó una oferta superior.");l.append(p,y,x,I);function M(E,P){let T=bwoBidsNode("article","bwo-bids-stat");T.append(bwoBidsNode("span","bwo-bids-stat-label",E),bwoBidsNode("strong","bwo-bids-stat-value",P)),p.appendChild(T)}function B(){let E=w.value,P=v.value,T=S.value.trim().toLocaleLowerCase("es"),O=b.filter(k=>(!E||k.managerId===E)&&(!P||P==="won"&&k.won||P==="lost"&&!k.won)&&(!T||`${k.manager} ${k.player}`.toLocaleLowerCase("es").includes(T)));p.replaceChildren();let R=new Set(O.map(k=>k.managerId)).size,F=O.length?O.reduce((k,G)=>k+G.amount,0)/O.length:0,U=O.filter(k=>k.won).length;M("Pujas visibles",O.length.toLocaleString("es-ES")),M("Rivales",R.toLocaleString("es-ES")),M("Puja media",bwoBidsMoney(F));L.replaceChildren();for(let k of O.slice(0,300)){let G=bwoBidsNode("tr"),Q=bwoBidsNode("td","bwo-bids-manager",k.manager),Y=bwoBidsNode("td","bwo-bids-player",k.player),J=bwoBidsNode("td","bwo-bids-money",bwoBidsMoney(k.amount)),ee=bwoBidsNode("td","bwo-bids-money",k.market>0?bwoBidsMoney(k.market):"—"),te=k.market>0?`${k.delta>=0?"+":"−"}${bwoBidsMoney(Math.abs(k.delta))} · ${k.pct>=0?"+":""}${k.pct.toFixed(1)}%`:"—",ne=bwoBidsNode("td",`bwo-bids-delta ${k.market<=0?"bwo-bids-neutral":k.delta>=0?"bwo-bids-positive":"bwo-bids-negative"}`,te),re=bwoBidsNode("td"),oe=bwoBidsNode("span",`bwo-bids-result ${k.won?"bwo-bids-result-won":"bwo-bids-result-lost"}`,k.won?"Ganó":"No ganó"),ae=bwoBidsNode("td","bwo-bids-date",bwoBidsDate(k.date));re.appendChild(oe),G.append(Q,Y,J,ee,ne,re,ae),L.appendChild(G)}if(O.length===0){let k=bwoBidsNode("tr"),G=bwoBidsNode("td","bwo-bids-empty","No hay pujas que coincidan con los filtros.");G.colSpan=7,k.appendChild(G),L.appendChild(k)}I.textContent=`Mostrando ${Math.min(O.length,300).toLocaleString("es-ES")} de ${O.length.toLocaleString("es-ES")} pujas filtradas · ${U.toLocaleString("es-ES")} ganadoras. Datos del tablón público de la liga.`}w.addEventListener("change",B),v.addEventListener("change",B),S.addEventListener("input",B),B(),i.focus()}catch(u){if(!t.isConnected)return;l.replaceChildren();let c=bwoBidsNode("div","bwo-bids-empty","No se pudieron cargar las pujas ahora mismo. Abre de nuevo el panel después de que termine la sincronización.");l.appendChild(c),console.warn("[biwtools] Error al abrir las pujas rivales:",u)}}
+function bwoEnsureBidsNav(){if(document.querySelector("[data-bwo-bids-nav]"))return;let e=[...document.querySelectorAll("a, button")].filter(t=>/^[\s\u200b]*jugadores[\s\u200b]*$/i.test((t.textContent??"").replace(/\d+/g,""))),t=e.find(n=>{let r=n.getBoundingClientRect();return n.getClientRects().length>0&&r.top>=0&&r.top<120})??e[0];if(!t)return;let n=t.closest("li")??t,r=n.cloneNode(!0),o=r.matches("a, button")?r:r.querySelector("a, button");if(!o)return;r.querySelectorAll("[id]").forEach(a=>a.removeAttribute("id")),r.querySelectorAll("[aria-current]").forEach(a=>a.removeAttribute("aria-current")),r.querySelectorAll(".active, .is-active, .selected, .current").forEach(a=>a.classList.remove("active","is-active","selected","current")),r.dataset.bwoBidsNav="1",r.classList.add("bwo-nav-bids"),o.dataset.bwoBidsNav="1",o.classList.add("bwo-nav-bids"),o.removeAttribute("routerlink"),o.removeAttribute("ng-reflect-router-link"),o.removeAttribute("aria-current"),o.setAttribute("href","#"),o.setAttribute("title","Ver las pujas reveladas de tus rivales"),o.setAttribute("aria-label","Ver pujas de rivales"),o.setAttribute("aria-haspopup","dialog"),o.setAttribute("aria-expanded","false");let a=bwoBidsNode("span","bwo-nav-bids-icon","◉"),i=bwoBidsNode("span","bwo-nav-bids-label","Ver pujas");a.setAttribute("aria-hidden","true"),o.replaceChildren(a,i),o.addEventListener("click",l=>{l.preventDefault(),l.stopImmediatePropagation(),bwoOpenBidsPanel()}),n.insertAdjacentElement("afterend",r)}
+globalThis.__BIWTOOLS_BALANCE_FIX__="v1.0.52-bids-and-balances";
 var bwoOriginalZw=zw;
 Ri=async function(){let{state:e}=await z(),{date:t,startingBalance:n}=await qo(),r=e.balanceCorrections??{};return Object.values(e.players).filter(o=>!e.inactive[o.id]).map(o=>{let a=e.movements.filter(i=>i.player_id===o.id&&i.occurred_at>t).reduce((i,l)=>i+l.amount,0),s=Number(r[o.id]??0),u=n+a+s,c=e.teamValue[o.id];return{id:o.id,name:o.name,icon:o.icon,team_value:c?.teamValue??null,squad_size:c?.squadSize??null,team_value_change_today:c?.changeToday??null,balance:u,balance_exact:Object.prototype.hasOwnProperty.call(r,o.id)}}).sort((o,a)=>a.balance-o.balance)};
 zw=async function(){let e=await z(),t=e.state.syncState,n=t.seasonAnchorDate??null,r=t.seasonStartingBalance??null,o;try{o=await bwoOriginalZw()}catch(a){if(n!=null&&r!=null){t.seasonAnchorDate=n,t.seasonStartingBalance=r,await Cu()}throw a}let i=await z(),l=i.state.syncState,s=await Li(),u=(await qo()).date,c=await rg(s.id,u);i.state.balanceCorrections??={};if(n===u&&r!=null)l.seasonAnchorDate=n,l.seasonStartingBalance=r,l.seasonStartingBalanceLockedV3="1";else i.state.balanceCorrections={},l.seasonStartingBalanceLockedV3="1";let f=Number(l.seasonStartingBalance??0);return i.state.balanceCorrections[String(s.id)]=Math.round(s.balance-(f+c)),await Cu(),o};
@@ -2549,7 +2674,7 @@ async function bwoReconcileLeagueRowsById(){let e=I0();if(!e)return;let t=e.clos
 gv=async function(){await bwoOriginalGv(),await bwoReconcileLeagueRowsById()};
 var bwoBalanceCycleRunning=!1,bwoSessionKey=null;
 function bwoReadSessionKey(){try{return ke()+"|"+xu()}catch{return null}}
-async function bwoRefreshBalances(){if(bwoBalanceCycleRunning)return;bwoBalanceCycleRunning=!0;try{let e=bwoReadSessionKey();e&&e!==bwoSessionKey&&(bwoSessionKey=e,Ju=0,Ti=null,Wi=null),Av(),Rv(),await Vg();let t=location.pathname,n=[];t.includes("/market")?(dv(),wv()):t.includes("/league")&&n.push(gv(),yv()),ov(),n.push(Cv(),_v(),kv(),Tv()),await Promise.allSettled(n)}catch(e){console.warn("[biwtools] No se pudo completar el refresco coordinado:",e)}finally{bwoBalanceCycleRunning=!1}}
+async function bwoRefreshBalances(){if(bwoBalanceCycleRunning)return;bwoBalanceCycleRunning=!0;try{let e=bwoReadSessionKey();e&&e!==bwoSessionKey&&(bwoSessionKey=e,Ju=0,Ti=null,Wi=null,bwoCloseBidsPanel()),Av(),Rv(),bwoEnsureBidsNav(),await Vg();let t=location.pathname,n=[];t.includes("/market")?(dv(),wv()):t.includes("/league")&&n.push(gv(),yv()),ov(),n.push(Cv(),_v(),kv(),Tv()),await Promise.allSettled(n)}catch(e){console.warn("[biwtools] No se pudo completar el refresco coordinado:",e)}finally{bwoBalanceCycleRunning=!1}}
 var Or=document.createElement("div");Or.id=y1;var zv=Or.attachShadow({mode:"open"}),Fv=document.createElement("style");Fv.textContent=Ov;zv.appendChild(Fv);var qv=document.createElement("div");zv.appendChild(qv);document.body.appendChild(Or);var b1=(0,Dv.createRoot)(qv);b1.render((0,A.jsx)(h1,{}));Iv();Ef();Bv();bwoRefreshBalances();setInterval(bwoRefreshBalances,1500);setInterval(rv,250);window.addEventListener("scroll",ic,{capture:!0,passive:!0});setInterval(ic,250);Or.style.pointerEvents="auto";function Hv(){let e=document.querySelectorAll(".cdk-overlay-pane"),t=e.length>0?e[e.length-1]:null,n=document.querySelector(".cdk-overlay-container"),r=t??n??document.body;r.lastElementChild!==Or&&r.appendChild(Or)}new MutationObserver(Hv).observe(document.body,{childList:!0});setInterval(Hv,1e3);})();
 /*! Bundled license information:
 
