@@ -90,18 +90,13 @@ Error generating stack: `+a.message+`
    \`open\`, si est\xE1 presente, muestra el aspa en vez de "Bt" y despliega bwo-fab-menu debajo. */
 .bwo-fab-wrap {
   position: fixed;
-  top: var(--bwo-menu-top, 64px);
-  right: var(--bwo-menu-right, 20px);
+  top: 20px;
+  right: 20px;
   z-index: 2147483647;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
-}
-
-/* El lanzador flotante se sustituye por una sección integrada en la navegación de Biwenger. */
-.bwo-fab {
-  display: none !important;
 }
 
 .bwo-fab {
@@ -1765,67 +1760,108 @@ td.bwo-right {
 .bwo-fab-menu-brand::first-letter {
   color: var(--bwo-accent);
 }
+
+/* DGSItools se abre desde la navegación principal de Biwenger. */
+.bwo-fab-wrap > .bwo-fab {
+  display: none !important;
+}
 `;var A=D(re(),1),v1="biwengerdgsitools-root";function y1(){let[e,t]=(0,Br.useState)(null),[n,r]=(0,Br.useState)(null),[o,a]=(0,Br.useState)(!1);(0,Br.useEffect)(()=>{function u(c){t({type:"competition",detail:c.detail})}function d(){t(null),a(!0)}return window.addEventListener(En,u),window.addEventListener("biwengerdgsitools:open-menu",d),pn().then(r).catch(()=>{}),()=>{window.removeEventListener(En,u),window.removeEventListener("biwengerdgsitools:open-menu",d)}},[]);function i(u){t(c=>c?.type===u?null:{type:u}),a(!1)}function l(u){t(c=>({type:"lineups",teamId:u,from:c}))}function s(){e?(t(null),a(!0)):a(u=>!u)}return(0,A.jsxs)(A.Fragment,{children:[(0,A.jsxs)("div",{className:"bwo-fab-wrap",children:[(0,A.jsx)("button",{className:"bwo-fab",onClick:s,"aria-label":"Men\xFA de BiwengerDGSItools",children:o?(0,A.jsx)("span",{className:"bwo-fab-x",children:"\u2715"}):(0,A.jsx)("img",{className:"bwo-fab-icon",src:"https://cdn.biwenger.com/img/logo.svg",alt:"BiwengerDGSItools"})}),o&&(0,A.jsxs)(A.Fragment,{children:[(0,A.jsx)("div",{className:"bwo-fab-backdrop",onClick:()=>a(!1)}),(0,A.jsxs)("div",{className:"bwo-fab-menu",children:[(0,A.jsxs)("div",{className:"bwo-fab-menu-head",children:[(0,A.jsx)("span",{className:"bwo-fab-menu-brand",children:"BiwengerDGSItools"}),(0,A.jsxs)("span",{className:"bwo-fab-menu-version",children:["v","1.0.49"]})]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("activity"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F4CB}"})," Actividad"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("lineups"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u26BD"})," Onces"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("injuries"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F691}"})," Lesionados"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("recommendations"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F3AF}"})," Recomendaciones"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("freeAgents"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F193}"})," Jugadores libres"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("upgrades"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F500}"})," Comparador"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("finances"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1F4B0}"})," Finanzas"]}),(0,A.jsxs)("button",{className:"bwo-fab-item",onClick:()=>i("diagnostics"),children:[(0,A.jsx)("span",{className:"bwo-fab-item-icon",children:"\u{1FA7A}"})," Diagn\xF3stico"]})]})]})]}),e&&(0,A.jsx)("div",{className:"bwo-panel",children:e.type==="competition"?(0,A.jsx)(Du,{playerId:e.detail.playerId,price:e.detail.price,name:e.detail.name,position:e.detail.position,owned:e.detail.owned??!1,selfId:n,onClose:()=>t(null),onOpenTeamLineup:l}):e.type==="lineups"?(0,A.jsx)(zu,{onClose:()=>t(null),initialTeamId:e.teamId??null,onBackToSource:e.from?()=>t(e.from??null):void 0}):e.type==="injuries"?(0,A.jsx)(qu,{onClose:()=>t(null),onOpenTeamLineup:l}):e.type==="recommendations"?(0,A.jsx)(Uu,{onClose:()=>t(null),selfId:n}):e.type==="freeAgents"?(0,A.jsx)(Wu,{onClose:()=>t(null),selfId:n,onOpenTeamLineup:l}):e.type==="upgrades"?(0,A.jsx)(Ku,{onClose:()=>t(null)}):e.type==="finances"?(0,A.jsx)(Gu,{onClose:()=>t(null),selfId:n}):e.type==="diagnostics"?(0,A.jsx)(tc,{onClose:()=>t(null),selfId:n}):(0,A.jsx)($u,{onClose:()=>t(null),onOpenTeamLineup:l})})]})}var Or=document.createElement("div");Or.id=v1;var Dv=Or.attachShadow({mode:"open"}),zv=document.createElement("style");zv.textContent=Bv;Dv.appendChild(zv);var Fv=document.createElement("div");Dv.appendChild(Fv);document.body.appendChild(Or);var h1=(0,Ov.createRoot)(Fv);h1.render((0,A.jsx)(y1,{}));Lv();Ef();$v();function bwoSafeRun(e){try{let t=e();t&&typeof t.then==="function"&&t.catch(()=>{})}catch{}}let bwoRefreshRunning=!1;async function bwoRefresh(){if(bwoRefreshRunning||document.visibilityState==="hidden")return;bwoRefreshRunning=!0;try{Ug(),Iv(),Av();let e=location.pathname,t=[];e.includes("/market")?t.push(cv,bv):e.includes("/league")&&t.push(fv,vv),t.push(rv,Nv,Pv,Ev,Mv),await Promise.allSettled(t.map(n=>Promise.resolve().then(n)))}finally{bwoRefreshRunning=!1}}bwoSafeRun(bwoRefresh);setInterval(()=>bwoSafeRun(bwoRefresh),1500);setInterval(()=>{document.visibilityState!=="hidden"&&bwoSafeRun(nv)},250);let bwoScrollQueued=!1;function bwoOnScroll(){bwoScrollQueued||(bwoScrollQueued=!0,requestAnimationFrame(()=>{bwoScrollQueued=!1,bwoSafeRun(ic)}))}window.addEventListener("scroll",bwoOnScroll,{capture:!0,passive:!0});setInterval(()=>{document.visibilityState!=="hidden"&&bwoSafeRun(ic)},500);Or.style.pointerEvents="auto";
+function bwoNavText(e){
+  return (e.textContent||"").replace(/\s+/g," ").trim();
+}
+function bwoFindTopNavItem(label){
+  const nodes=[...document.querySelectorAll("a,button,[role='link'],[role='button']")];
+  return nodes.find(e=>bwoNavText(e)===label) || null;
+}
+function bwoFindSharedNavContainer(items){
+  if(!items.length)return null;
+  let p=items[0].parentElement;
+  while(p){
+    if(items.every(x=>p.contains(x)))return p;
+    p=p.parentElement;
+  }
+  return null;
+}
+function bwoTopLevelChildWithin(node,container){
+  let cur=node;
+  while(cur&&cur.parentElement!==container)cur=cur.parentElement;
+  return cur&&cur.parentElement===container?cur:null;
+}
 function bwoEnsureTopNav(){
   if(document.querySelector('[data-biwengerdgsitools-nav="1"]'))return;
-  const labels=["Inicio","Liga","Equipo","Mercado","Jornada","Jugadores"];
-  const clickables=[...document.querySelectorAll("a,button")];
-  const normalized=e=>(e.textContent||"").replace(/\s+/g," ").trim();
-  const players=clickables.find(e=>normalized(e)==="Jugadores");
-  if(!players)return;
 
-  let nav=players.parentElement;
-  for(let depth=0;nav&&depth<7;depth++,nav=nav.parentElement){
-    const found=[...nav.querySelectorAll("a,button")].map(normalized);
-    if(labels.filter(label=>found.includes(label)).length>=5)break;
-  }
-  if(!nav)return;
+  const inicio=bwoFindTopNavItem("Inicio");
+  const liga=bwoFindTopNavItem("Liga");
+  const equipo=bwoFindTopNavItem("Equipo");
+  const mercado=bwoFindTopNavItem("Mercado");
+  const jornada=bwoFindTopNavItem("Jornada");
+  const jugadores=bwoFindTopNavItem("Jugadores");
+  const anchors=[inicio,liga,equipo,mercado,jornada,jugadores].filter(Boolean);
+  if(anchors.length<5||!jugadores)return;
 
-  let item=players;
-  while(item.parentElement&&item.parentElement!==nav)item=item.parentElement;
-  if(item.parentElement!==nav)return;
+  const container=bwoFindSharedNavContainer(anchors);
+  if(!container)return;
 
-  const clone=item.cloneNode(true);
-  clone.setAttribute("data-biwengerdgsitools-nav","1");
-  clone.removeAttribute("id");
-  clone.querySelectorAll("[id]").forEach(e=>e.removeAttribute("id"));
+  const jugadoresItem=bwoTopLevelChildWithin(jugadores,container);
+  if(!jugadoresItem)return;
 
-  // Quita estados activos heredados de "Jugadores".
-  const clearActive=e=>{
-    [...e.classList].forEach(c=>{
-      if(/active|selected|current|router-link-active/i.test(c))e.classList.remove(c);
-    });
+  const item=jugadoresItem.cloneNode(true);
+  item.setAttribute("data-biwengerdgsitools-nav","1");
+
+  // Prevent duplicated IDs / Angular bindings copied from Jugadores.
+  item.removeAttribute("id");
+  item.querySelectorAll("[id]").forEach(e=>e.removeAttribute("id"));
+  item.querySelectorAll("[routerlink],[ng-reflect-router-link]").forEach(e=>{
+    e.removeAttribute("routerlink");
+    e.removeAttribute("ng-reflect-router-link");
+  });
+
+  // Remove inherited active/current state but keep Biwenger's original classes/layout/icon.
+  const clean=e=>{
     e.removeAttribute("aria-current");
+    [...e.classList].forEach(c=>{
+      if(/(^|[-_])(active|selected|current)([-_]|$)/i.test(c))e.classList.remove(c);
+    });
   };
-  clearActive(clone);
-  clone.querySelectorAll("*").forEach(clearActive);
+  clean(item);
+  item.querySelectorAll("*").forEach(clean);
 
-  const action=clone.matches("a,button")?clone:clone.querySelector("a,button");
+  const action=item.matches("a,button,[role='link'],[role='button']")
+    ? item
+    : item.querySelector("a,button,[role='link'],[role='button']");
   if(!action)return;
-  if(action.tagName==="A"){
-    action.setAttribute("href","#");
-    action.removeAttribute("routerlink");
-    action.removeAttribute("ng-reflect-router-link");
-  }
-  action.setAttribute("aria-label","Abrir BiwengerDGSItools");
+
+  if(action.tagName==="A")action.setAttribute("href","#");
+  action.setAttribute("aria-label","DGSItools");
   action.setAttribute("title","BiwengerDGSItools");
-  action.innerHTML='<img src="https://cdn.biwenger.com/img/logo.svg" alt="" aria-hidden="true" style="width:18px;height:18px;object-fit:contain;display:block;flex:0 0 auto"><span style="white-space:nowrap">DGSItools</span>';
+
+  // Change ONLY the visible "Jugadores" text. Keep the cloned icon and styling intact.
+  const walker=document.createTreeWalker(action,NodeFilter.SHOW_TEXT);
+  let textNode=null;
+  while(walker.nextNode()){
+    if((walker.currentNode.nodeValue||"").trim()==="Jugadores"){
+      textNode=walker.currentNode;
+      break;
+    }
+  }
+  if(textNode)textNode.nodeValue=textNode.nodeValue.replace("Jugadores","DGSItools");
+  else{
+    const span=[...action.querySelectorAll("span")].find(e=>bwoNavText(e)==="Jugadores");
+    if(span)span.textContent="DGSItools";
+    else action.appendChild(document.createTextNode(" DGSItools"));
+  }
 
   action.addEventListener("click",e=>{
     e.preventDefault();
     e.stopPropagation();
-    const rect=action.getBoundingClientRect();
-    const menuWidth=220;
-    const right=Math.max(8,Math.min(window.innerWidth-menuWidth-8,window.innerWidth-rect.right));
-    Or.style.setProperty("--bwo-menu-top",`${Math.max(8,rect.bottom+8)}px`);
-    Or.style.setProperty("--bwo-menu-right",`${right}px`);
     window.dispatchEvent(new CustomEvent("biwengerdgsitools:open-menu"));
   },true);
 
-  nav.appendChild(clone);
+  // Insert directly AFTER Jugadores in the exact same parent.
+  jugadoresItem.insertAdjacentElement("afterend",item);
 }
 bwoSafeRun(bwoEnsureTopNav);
-setInterval(()=>bwoSafeRun(bwoEnsureTopNav),1200);
+setInterval(()=>bwoSafeRun(bwoEnsureTopNav),1000);
 function qv(){let e=document.querySelectorAll(".cdk-overlay-pane"),t=e.length>0?e[e.length-1]:null,n=document.querySelector(".cdk-overlay-container"),r=t??n??document.body;r.lastElementChild!==Or&&r.appendChild(Or)}let bwoOverlayQueued=!1;function bwoScheduleOverlaySync(){bwoOverlayQueued||(bwoOverlayQueued=!0,queueMicrotask(()=>{bwoOverlayQueued=!1,bwoSafeRun(qv)}))}new MutationObserver(()=>{bwoScheduleOverlaySync(),bwoSafeRun(bwoEnsureTopNav)}).observe(document.body,{childList:!0,subtree:!0});bwoSafeRun(qv);setInterval(()=>{document.visibilityState!=="hidden"&&bwoSafeRun(qv)},1500);})();
 /*! Bundled license information:
 
