@@ -101,6 +101,14 @@ Error generating stack: `+a.message+`
       box-shadow: inset 0 -3px #e0142c;
     }
 
+    li.bwo-nav-bids.active {
+      box-shadow: inset 0 -4px #e0142c;
+    }
+
+    li.bwo-nav-bids.active > a {
+      color: #fff !important;
+    }
+
     .bwo-nav-bids .bwo-nav-bids-icon {
       display: inline-grid;
       place-items: center;
@@ -120,6 +128,189 @@ Error generating stack: `+a.message+`
       color: #fff;
       border-color: #e0142c;
       background: rgba(224, 20, 44, .18);
+    }
+
+    /* Página integrada de Herramientas, al mismo nivel visual que Liga/Equipo/Jugadores. */
+    [data-bwo-tools-hidden="1"] {
+      display: none !important;
+    }
+
+    .bwo-tools-page-host {
+      box-sizing: border-box;
+      width: min(1400px, 100%);
+      min-height: calc(100vh - 92px);
+      margin: 0 auto;
+      padding: 24px 18px 42px;
+      color: #f0f0f0;
+      font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+      animation: bwo-tools-page-in 180ms ease both;
+    }
+
+    .bwo-tools-page-head {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 16px;
+      padding: 24px 26px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      background: linear-gradient(125deg, #242428 0%, #17171a 62%, #260b11 100%);
+      box-shadow: 0 16px 38px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.04);
+    }
+
+    .bwo-tools-page-head::after {
+      content: "";
+      position: absolute;
+      right: -52px;
+      bottom: -92px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(224,20,44,.22), transparent 68%);
+      pointer-events: none;
+    }
+
+    .bwo-tools-page-kicker {
+      display: block;
+      margin-bottom: 7px;
+      color: #e0142c;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .bwo-tools-page-title {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(25px, 3vw, 36px);
+      line-height: 1.05;
+      letter-spacing: -.025em;
+    }
+
+    .bwo-tools-page-subtitle {
+      max-width: 720px;
+      margin: 9px 0 0;
+      color: #aaa7a5;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .bwo-tools-page-count {
+      position: relative;
+      z-index: 1;
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border: 1px solid rgba(224,20,44,.30);
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(224,20,44,.12);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .bwo-tools-table-wrap {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      background: #111214;
+      box-shadow: 0 16px 42px rgba(0,0,0,.26);
+    }
+
+    .bwo-tools-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .bwo-tools-table th {
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      color: #8f8c89;
+      background: #1d1e21;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .bwo-tools-table th:first-child { width: 54px; }
+    .bwo-tools-table th:nth-child(2) { width: 190px; }
+    .bwo-tools-table th:nth-child(4) { width: 104px; }
+    .bwo-tools-table th:last-child { width: 102px; text-align: right; }
+
+    .bwo-tools-table td {
+      box-sizing: border-box;
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      color: #c5c3c1;
+      font-size: 12px;
+      line-height: 1.45;
+      vertical-align: middle;
+    }
+
+    .bwo-tools-table tbody tr:last-child td { border-bottom: 0; }
+    .bwo-tools-table tbody tr { transition: background 150ms ease, box-shadow 150ms ease; }
+    .bwo-tools-table tbody tr:hover { background: rgba(255,255,255,.038); box-shadow: inset 3px 0 #e0142c; }
+
+    .bwo-tools-page-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid #34363c;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #252831, #15171b);
+      box-shadow: inset 0 1px rgba(255,255,255,.06);
+      font-size: 15px;
+    }
+
+    .bwo-tools-page-name { color: #fff !important; font-size: 13px !important; font-weight: 800; }
+    .bwo-tools-page-status { color: #6ee086 !important; font-weight: 800; white-space: nowrap; }
+
+    .bwo-tools-page-open {
+      min-width: 76px;
+      padding: 7px 13px;
+      border: 1px solid rgba(224,20,44,.42);
+      border-radius: 9px;
+      color: #fff;
+      background: rgba(224,20,44,.14);
+      cursor: pointer;
+      font: 800 11px/1.2 "Open Sans", system-ui, sans-serif;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+
+    .bwo-tools-page-open:hover {
+      transform: translateY(-1px);
+      border-color: #e0142c;
+      background: #c81228;
+    }
+
+    .bwo-tools-page-action { text-align: right; }
+
+    @keyframes bwo-tools-page-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 760px) {
+      .bwo-tools-page-host { padding: 14px 10px 28px; }
+      .bwo-tools-page-head { align-items: flex-start; flex-direction: column; padding: 19px; }
+      .bwo-tools-table-wrap { overflow: visible; border: 0; background: transparent; box-shadow: none; }
+      .bwo-tools-table, .bwo-tools-table tbody { display: block; }
+      .bwo-tools-table thead { display: none; }
+      .bwo-tools-table tr { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; margin-bottom: 9px; padding: 12px; border: 1px solid rgba(255,255,255,.10); border-radius: 12px; background: #17181b; }
+      .bwo-tools-table td { display: block; padding: 2px 5px; border: 0; }
+      .bwo-tools-table td:nth-child(1) { grid-row: 1 / span 3; }
+      .bwo-tools-table td:nth-child(2) { grid-column: 2; }
+      .bwo-tools-table td:nth-child(3) { grid-column: 2 / 4; }
+      .bwo-tools-table td:nth-child(4) { display: none; }
+      .bwo-tools-table td:nth-child(5) { grid-column: 3; grid-row: 1; }
     }
 
     @keyframes bwo-host-badge-in {
@@ -2003,7 +2194,7 @@ button:focus-visible,
 }
 
 .bwo-fab-menu-version::after {
-  content: "v1.0.56 herramientas";
+  content: "v1.0.57 sección integrada";
   font-size: 10px;
 }
 
@@ -2688,12 +2879,30 @@ function bwoSetBidsNavActive(e){document.querySelectorAll("[data-bwo-bids-nav]")
 async function bwoOpenBidsPanel(){if(zv?.querySelector(".bwo-bids-panel")){bwoCloseBidsPanel();return}let e=bwoBidsNode("div","bwo-bids-backdrop"),t=bwoBidsNode("section","bwo-bids-panel");t.setAttribute("role","dialog"),t.setAttribute("aria-modal","true"),t.setAttribute("aria-labelledby","bwo-bids-title");let n=bwoBidsNode("header","bwo-bids-head"),r=bwoBidsNode("div"),o=bwoBidsNode("h2","bwo-bids-title","Pujas de rivales");o.id="bwo-bids-title";let a=bwoBidsNode("p","bwo-bids-subtitle","Histórico de pujas reveladas cuando se resolvió el mercado. Biwenger mantiene privadas las pujas que todavía están activas.");r.append(o,a);let i=bwoBidsNode("button","bwo-bids-close","×");i.type="button",i.title="Cerrar",i.setAttribute("aria-label","Cerrar pujas rivales"),i.addEventListener("click",bwoCloseBidsPanel),n.append(r,i);let l=bwoBidsNode("div","bwo-bids-body"),s=bwoBidsNode("div","bwo-bids-loading","Actualizando y preparando las pujas…");l.appendChild(s),t.append(n,l),e.addEventListener("click",bwoCloseBidsPanel),zv.append(e,t),bwoSetBidsNavActive(!0),bwoBidsEscHandler=u=>{u.key==="Escape"&&bwoCloseBidsPanel()},document.addEventListener("keydown",bwoBidsEscHandler);try{await Vg().catch(()=>{});let[u,c,f,g]=await Promise.all([jf(),H(),z(),pn().catch(()=>null)]),b=(u??[]).filter(m=>g==null||String(m.manager_id)!==String(g)).map(m=>bwoBidRowData(m,c,f.state?.players??{})).sort((m,d)=>d.timestamp-m.timestamp);if(!t.isConnected)return;l.replaceChildren();if(b.length===0){let m=bwoBidsNode("div","bwo-bids-empty");m.append(bwoBidsNode("span",null,"Aún no hay pujas rivales reveladas en esta temporada. Se irán incorporando al resolverse nuevos mercados.")),l.appendChild(m);return}let p=bwoBidsNode("div","bwo-bids-stats"),y=bwoBidsNode("div","bwo-bids-filters"),w=bwoBidsNode("select","bwo-bids-filter"),m=bwoBidsNode("option",null,"Todos los rivales");m.value="",w.appendChild(m);let d=[...new Map(b.map(E=>[E.managerId,E.manager])).entries()].sort((E,P)=>E[1].localeCompare(P[1],"es"));for(let[E,P]of d){let T=bwoBidsNode("option",null,P);T.value=E,w.appendChild(T)}w.setAttribute("aria-label","Filtrar por rival");let v=bwoBidsNode("select","bwo-bids-filter");v.setAttribute("aria-label","Filtrar por resultado");for(let[E,P]of[["","Todos los resultados"],["won","Pujas ganadoras"],["lost","Pujas no ganadoras"]]){let T=bwoBidsNode("option",null,P);T.value=E,v.appendChild(T)}let S=bwoBidsNode("input","bwo-bids-filter");S.type="search",S.placeholder="Buscar jugador o rival…",S.setAttribute("aria-label","Buscar jugador o rival"),y.append(w,v,S);let x=bwoBidsNode("div","bwo-bids-table-wrap"),C=bwoBidsNode("table","bwo-bids-table"),N=bwoBidsNode("thead"),_=bwoBidsNode("tr");for(let E of["Rival","Jugador","Puja","Valor","Diferencia","Resultado","Fecha"])_.appendChild(bwoBidsNode("th",null,E));N.appendChild(_);let L=bwoBidsNode("tbody");C.append(N,L),x.appendChild(C);let I=bwoBidsNode("p","bwo-bids-foot","Los importes proceden del tablón público de la liga. “No ganó” indica que el rival pujó, pero otro usuario presentó una oferta superior.");l.append(p,y,x,I);function M(E,P){let T=bwoBidsNode("article","bwo-bids-stat");T.append(bwoBidsNode("span","bwo-bids-stat-label",E),bwoBidsNode("strong","bwo-bids-stat-value",P)),p.appendChild(T)}function B(){let E=w.value,P=v.value,T=S.value.trim().toLocaleLowerCase("es"),O=b.filter(k=>(!E||k.managerId===E)&&(!P||P==="won"&&k.won||P==="lost"&&!k.won)&&(!T||`${k.manager} ${k.player}`.toLocaleLowerCase("es").includes(T)));p.replaceChildren();let R=new Set(O.map(k=>k.managerId)).size,F=O.length?O.reduce((k,G)=>k+G.amount,0)/O.length:0,U=O.filter(k=>k.won).length;M("Pujas visibles",O.length.toLocaleString("es-ES")),M("Rivales",R.toLocaleString("es-ES")),M("Puja media",bwoBidsMoney(F));L.replaceChildren();for(let k of O.slice(0,300)){let G=bwoBidsNode("tr"),Q=bwoBidsNode("td","bwo-bids-manager",k.manager),Y=bwoBidsNode("td","bwo-bids-player",k.player),J=bwoBidsNode("td","bwo-bids-money",bwoBidsMoney(k.amount)),ee=bwoBidsNode("td","bwo-bids-money",k.market>0?bwoBidsMoney(k.market):"—"),te=k.market>0?`${k.delta>=0?"+":"−"}${bwoBidsMoney(Math.abs(k.delta))} · ${k.pct>=0?"+":""}${k.pct.toFixed(1)}%`:"—",ne=bwoBidsNode("td",`bwo-bids-delta ${k.market<=0?"bwo-bids-neutral":k.delta>=0?"bwo-bids-positive":"bwo-bids-negative"}`,te),re=bwoBidsNode("td"),oe=bwoBidsNode("span",`bwo-bids-result ${k.won?"bwo-bids-result-won":"bwo-bids-result-lost"}`,k.won?"Ganó":"No ganó"),ae=bwoBidsNode("td","bwo-bids-date",bwoBidsDate(k.date));re.appendChild(oe),G.append(Q,Y,J,ee,ne,re,ae),L.appendChild(G)}if(O.length===0){let k=bwoBidsNode("tr"),G=bwoBidsNode("td","bwo-bids-empty","No hay pujas que coincidan con los filtros.");G.colSpan=7,k.appendChild(G),L.appendChild(k)}I.textContent=`Mostrando ${Math.min(O.length,300).toLocaleString("es-ES")} de ${O.length.toLocaleString("es-ES")} pujas filtradas · ${U.toLocaleString("es-ES")} ganadoras. Datos del tablón público de la liga.`}w.addEventListener("change",B),v.addEventListener("change",B),S.addEventListener("input",B),B(),i.focus()}catch(u){if(!t.isConnected)return;l.replaceChildren();let c=bwoBidsNode("div","bwo-bids-empty","No se pudieron cargar las pujas ahora mismo. Abre de nuevo el panel después de que termine la sincronización.");l.appendChild(c),console.warn("[biwtools] Error al abrir las pujas rivales:",u)}}
 function bwoNavText(e){return(e.textContent??"").replace(/\d+/g,"").replace(/\s+/g," ").trim().toLocaleLowerCase("es")}
 function bwoNavUnit(e){let t=e;for(;t.parentElement&&t.parentElement!==document.body;){let n=t.parentElement,r=[...n.children],o=r.filter(a=>/^(inicio|liga|equipo|mercado|jornada|jugadores)$/.test(bwoNavText(a))).length;if(o>=3)return t;t=n}return e.closest("a, button, li, [role='menuitem']")??e.parentElement}
-function bwoSyncToolsNavState(){let e=!!zv?.querySelector(".bwo-fab-menu");document.querySelectorAll("[data-bwo-tools-nav='1']").forEach(t=>{t.classList.toggle("active",e),t.setAttribute("aria-selected",String(e));let n=t.matches("a")?t:t.querySelector("a");n&&(n.setAttribute("aria-expanded",String(e)),e?n.setAttribute("aria-current","page"):n.removeAttribute("aria-current"))})}
-function bwoToggleToolsMenu(){bwoCloseBidsPanel();let e=zv?.querySelector(".bwo-fab");e&&(e.click(),setTimeout(()=>{bwoEnsureBidsFabItem(),bwoSyncToolsNavState()},0))}
+var bwoToolsPageWanted=!1,bwoToolsPagePath=null,bwoToolsExitBound=!1,bwoToolsRows=[
+  {icon:"📋",name:"Actividad",description:"Histórico del mercado, fichajes, ventas y movimientos recientes de la liga."},
+  {icon:"👁️",name:"Ver pujas",description:"Consulta las pujas rivales que ya fueron reveladas al resolverse el mercado."},
+  {icon:"⚽",name:"Onces",description:"Revisa alineaciones, formaciones y jugadores utilizados por cada equipo."},
+  {icon:"🚑",name:"Lesionados",description:"Control de lesionados, sancionados, dudas y disponibilidad de la plantilla."},
+  {icon:"🎯",name:"Recomendaciones",description:"Sugerencias de mercado calculadas según rendimiento, precio y competencia."},
+  {icon:"🆓",name:"Jugadores libres",description:"Encuentra oportunidades disponibles que todavía no pertenecen a ningún rival."},
+  {icon:"🔀",name:"Comparador",description:"Compara jugadores y alternativas para mejorar posiciones concretas del equipo."},
+  {icon:"💰",name:"Finanzas",description:"Analiza saldos, patrimonio, capacidad de puja y evolución económica."},
+  {icon:"🩺",name:"Diagnóstico",description:"Comprueba sincronización, datos disponibles y posibles incidencias del bundle."}
+];
+function bwoOpenToolFromPage(e){if(e==="Ver pujas"){bwoOpenBidsPanel();return}let t=zv?.querySelector(".bwo-fab");if(!t)return;zv.querySelector(".bwo-fab-menu")||t.click(),setTimeout(()=>{bwoEnsureBidsFabItem();let n=[...zv.querySelectorAll(".bwo-fab-item")].find(r=>(r.textContent??"").trim()===e);n?n.click():console.warn(`[biwtools] No se encontró la herramienta ${e}`)},0)}
+function bwoBuildToolsPage(){let e=bwoBidsNode("section","bwo-tools-page-host");e.dataset.bwoToolsPage="1",e.setAttribute("aria-labelledby","bwo-tools-page-title");let t=bwoBidsNode("header","bwo-tools-page-head"),n=bwoBidsNode("div"),r=bwoBidsNode("span","bwo-tools-page-kicker","Biwtools · Centro de control"),o=bwoBidsNode("h1","bwo-tools-page-title","Herramientas");o.id="bwo-tools-page-title";let a=bwoBidsNode("p","bwo-tools-page-subtitle","Todas las funciones de análisis reunidas en una sección integrada. Elige una herramienta para abrir su información sin abandonar Biwenger."),i=bwoBidsNode("span","bwo-tools-page-count",`${bwoToolsRows.length} herramientas disponibles`);n.append(r,o,a),t.append(n,i);let l=bwoBidsNode("div","bwo-tools-table-wrap"),s=bwoBidsNode("table","bwo-tools-table"),u=bwoBidsNode("thead"),c=bwoBidsNode("tr");for(let E of["","Herramienta","Descripción","Estado",""])c.appendChild(bwoBidsNode("th",null,E));u.appendChild(c);let f=bwoBidsNode("tbody");for(let E of bwoToolsRows){let P=bwoBidsNode("tr"),T=bwoBidsNode("td"),O=bwoBidsNode("span","bwo-tools-page-icon",E.icon);O.setAttribute("aria-hidden","true"),T.appendChild(O);let R=bwoBidsNode("td","bwo-tools-page-name",E.name),F=bwoBidsNode("td",null,E.description),U=bwoBidsNode("td","bwo-tools-page-status","Disponible"),k=bwoBidsNode("td","bwo-tools-page-action"),G=bwoBidsNode("button","bwo-tools-page-open","Abrir");G.type="button",G.setAttribute("aria-label",`Abrir ${E.name}`),G.addEventListener("click",()=>bwoOpenToolFromPage(E.name)),k.appendChild(G),P.append(T,R,F,U,k),f.appendChild(P)}return s.append(u,f),l.appendChild(s),e.append(t,l),e}
+function bwoRestoreToolsContent(){document.querySelectorAll("[data-bwo-tools-hidden='1']").forEach(e=>e.removeAttribute("data-bwo-tools-hidden"))}
+function bwoMaintainToolsPage(){if(!bwoToolsPageWanted)return;let e=document.querySelector("main.container")??document.querySelector("main");if(!e)return;let t=e.querySelector(":scope > .bwo-tools-page-host");t||(document.querySelectorAll(".bwo-tools-page-host").forEach(r=>r.remove()),t=bwoBuildToolsPage());for(let n of[...e.children])n!==t&&n.setAttribute("data-bwo-tools-hidden","1");t.parentElement===e||e.appendChild(t),bwoSyncToolsNavState()}
+function bwoOpenToolsPage(){bwoCloseBidsPanel(),bwoToolsPageWanted=!0,bwoToolsPagePath=location.pathname;let e=zv?.querySelector(".bwo-fab-menu");e&&zv.querySelector(".bwo-fab")?.click();try{history.replaceState(history.state,"",`${location.pathname}${location.search}#bwo-herramientas`)}catch{}bwoMaintainToolsPage(),bwoSyncToolsNavState()}
+function bwoCloseToolsPage(){if(!bwoToolsPageWanted&&!document.querySelector(".bwo-tools-page-host"))return;bwoToolsPageWanted=!1,bwoToolsPagePath=null,document.querySelectorAll(".bwo-tools-page-host").forEach(e=>e.remove()),bwoRestoreToolsContent();try{location.hash==="#bwo-herramientas"&&history.replaceState(history.state,"",`${location.pathname}${location.search}`)}catch{}bwoSyncToolsNavState()}
+function bwoBindToolsExit(){if(bwoToolsExitBound)return;bwoToolsExitBound=!0,document.addEventListener("click",e=>{let t=e.target instanceof Element?e.target.closest("app-nav a[href]"):null;t&&!t.closest("[data-bwo-tools-nav='1']")&&bwoCloseToolsPage()},!0)}
+function bwoSyncToolsNavState(){let e=bwoToolsPageWanted&&!!document.querySelector(".bwo-tools-page-host");document.querySelectorAll("[data-bwo-tools-nav='1']").forEach(t=>{let n=t.parentElement;e&&n&&[...n.children].forEach(r=>{if(r===t)return;r.classList.contains("active")&&(r.dataset.bwoToolsWasActive="1"),r.classList.remove("active"),r.setAttribute("aria-selected","false")}),!e&&n&&[...n.children].forEach(r=>{r.dataset.bwoToolsWasActive==="1"&&(r.classList.add("active"),r.setAttribute("aria-selected","true"),delete r.dataset.bwoToolsWasActive)}),t.classList.toggle("active",e),t.setAttribute("aria-selected",String(e));let r=t.matches("a")?t:t.querySelector("a");r&&(r.setAttribute("aria-expanded",String(e)),e?r.setAttribute("aria-current","page"):r.removeAttribute("aria-current"))})}
+function bwoToggleToolsMenu(){bwoOpenToolsPage()}
 function bwoPrepareBidsNavItem(e){let t=e.cloneNode(!0),n=t.matches("a")?t:t.querySelector("a");if(!n)return null;t.classList.remove("active","is-active","selected","current"),t.setAttribute("aria-selected","false"),t.dataset.bwoToolsNav="1",t.classList.add("bwo-nav-bids"),n.classList.add("bwo-nav-bids","bwo-nav-bids-trigger"),n.removeAttribute("aria-current"),n.setAttribute("href","#bwo-herramientas"),n.setAttribute("title","Abrir las herramientas de Biwtools"),n.setAttribute("aria-label","Abrir herramientas de Biwtools"),n.setAttribute("aria-haspopup","dialog"),n.setAttribute("aria-expanded","false");let r=n.querySelector("i.icon")?.cloneNode(!1)??bwoBidsNode("i");r.className="icon icon-hamburger bwo-nav-bids-native-icon",r.setAttribute("aria-hidden","true"),n.replaceChildren(r,document.createTextNode(" Herramientas "));let o=a=>{a.preventDefault(),a.stopImmediatePropagation(),bwoToggleToolsMenu()};return n.addEventListener("click",o),n.addEventListener("keydown",a=>{(a.key==="Enter"||a.key===" ")&&o(a)}),t}
 function bwoEnsureBidsNav(){let e=[...document.querySelectorAll("app-nav linear-tabs ul[role='navigation']")],t=!1;for(let n of e){if(n.querySelector(":scope > li[data-bwo-tools-nav='1']")){t=!0;continue}let r=n.querySelector(":scope > li > a[href='/players']")?.closest("li"),o=r?bwoPrepareBidsNavItem(r):null;o&&(r.insertAdjacentElement("afterend",o),t=!0)}if(t)return;let n=[],r=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);for(let o;o=r.nextNode();)if((o.textContent??"").replace(/\s+/g," ").trim().toLocaleLowerCase("es")==="jugadores"&&o.parentElement)n.push(o.parentElement);let o=n.find(a=>{let i=a.getBoundingClientRect();return a.getClientRects().length>0&&i.top>=0&&i.top<120})??n[0];if(!o)return;let a=bwoNavUnit(o);if(!a||a===document.body||a.parentElement?.querySelector(":scope > [data-bwo-tools-nav='1']"))return;let i=bwoPrepareBidsNavItem(a);i&&a.insertAdjacentElement("afterend",i)}
 function bwoEnsureBidsFabItem(){let e=zv?.querySelector(".bwo-fab-menu");if(!e){bwoSyncToolsNavState();return}if(!e.querySelector("[data-bwo-bids-fab='1']")){let t=e.querySelector(".bwo-fab-item"),n=bwoBidsNode("button","bwo-fab-item");n.type="button",n.dataset.bwoBidsFab="1",n.setAttribute("aria-label","Ver pujas de rivales");let r=bwoBidsNode("span","bwo-fab-item-icon","👁️");r.setAttribute("aria-hidden","true"),n.append(r,document.createTextNode(" Ver pujas")),n.addEventListener("click",()=>{zv.querySelector(".bwo-fab")?.click(),setTimeout(bwoOpenBidsPanel,0)}),t?t.insertAdjacentElement("afterend",n):e.appendChild(n)}bwoSyncToolsNavState()}
-globalThis.__BIWTOOLS_BALANCE_FIX__="v1.0.56-navbar-tools";
+globalThis.__BIWTOOLS_BALANCE_FIX__="v1.0.57-integrated-tools";
 var bwoOriginalZw=zw;
 Ri=async function(){let{state:e}=await z(),{date:t,startingBalance:n}=await qo(),r=e.balanceCorrections??{};return Object.values(e.players).filter(o=>!e.inactive[o.id]).map(o=>{let a=e.movements.filter(i=>i.player_id===o.id&&i.occurred_at>t).reduce((i,l)=>i+l.amount,0),s=Number(r[o.id]??0),u=n+a+s,c=e.teamValue[o.id];return{id:o.id,name:o.name,icon:o.icon,team_value:c?.teamValue??null,squad_size:c?.squadSize??null,team_value_change_today:c?.changeToday??null,balance:u,balance_exact:Object.prototype.hasOwnProperty.call(r,o.id)}}).sort((o,a)=>a.balance-o.balance)};
 zw=async function(){let e=await z(),t=e.state.syncState,n=t.seasonAnchorDate??null,r=t.seasonStartingBalance??null,o;try{o=await bwoOriginalZw()}catch(a){if(n!=null&&r!=null){t.seasonAnchorDate=n,t.seasonStartingBalance=r,await Cu()}throw a}let i=await z(),l=i.state.syncState,s=await Li(),u=(await qo()).date,c=await rg(s.id,u);i.state.balanceCorrections??={};if(n===u&&r!=null)l.seasonAnchorDate=n,l.seasonStartingBalance=r,l.seasonStartingBalanceLockedV3="1";else i.state.balanceCorrections={},l.seasonStartingBalanceLockedV3="1";let f=Number(l.seasonStartingBalance??0);return i.state.balanceCorrections[String(s.id)]=Math.round(s.balance-(f+c)),await Cu(),o};
@@ -2703,8 +2912,8 @@ async function bwoReconcileLeagueRowsById(){let e=I0();if(!e)return;let t=e.clos
 gv=async function(){await bwoOriginalGv(),await bwoReconcileLeagueRowsById()};
 var bwoBalanceCycleRunning=!1,bwoSessionKey=null;
 function bwoReadSessionKey(){try{return ke()+"|"+xu()}catch{return null}}
-async function bwoRefreshBalances(){if(bwoBalanceCycleRunning)return;bwoBalanceCycleRunning=!0;try{let e=bwoReadSessionKey();e&&e!==bwoSessionKey&&(bwoSessionKey=e,Ju=0,Ti=null,Wi=null,bwoCloseBidsPanel()),Av(),Rv(),bwoEnsureBidsNav(),bwoEnsureBidsFabItem(),await Vg();let t=location.pathname,n=[];t.includes("/market")?(dv(),wv()):t.includes("/league")&&n.push(gv(),yv()),ov(),n.push(Cv(),_v(),kv(),Tv()),await Promise.allSettled(n)}catch(e){console.warn("[biwtools] No se pudo completar el refresco coordinado:",e)}finally{bwoBalanceCycleRunning=!1}}
-var Or=document.createElement("div");Or.id=y1;var zv=Or.attachShadow({mode:"open"}),Fv=document.createElement("style");Fv.textContent=Ov;zv.appendChild(Fv);var qv=document.createElement("div");zv.appendChild(qv);document.body.appendChild(Or);var b1=(0,Dv.createRoot)(qv);b1.render((0,A.jsx)(h1,{}));new MutationObserver(bwoEnsureBidsFabItem).observe(zv,{childList:!0,subtree:!0});Iv();Ef();bwoEnsureBidsNav();bwoEnsureBidsFabItem();Bv();bwoRefreshBalances();setInterval(bwoRefreshBalances,1500);setInterval(rv,250);window.addEventListener("scroll",ic,{capture:!0,passive:!0});setInterval(ic,250);Or.style.pointerEvents="auto";function Hv(){bwoEnsureBidsNav();let e=document.querySelectorAll(".cdk-overlay-pane"),t=e.length>0?e[e.length-1]:null,n=document.querySelector(".cdk-overlay-container"),r=t??n??document.body;r.lastElementChild!==Or&&r.appendChild(Or)}new MutationObserver(Hv).observe(document.body,{childList:!0,subtree:!0});setInterval(Hv,1e3);})();
+async function bwoRefreshBalances(){if(bwoBalanceCycleRunning)return;bwoBalanceCycleRunning=!0;try{let e=bwoReadSessionKey();e&&e!==bwoSessionKey&&(bwoSessionKey=e,Ju=0,Ti=null,Wi=null,bwoCloseBidsPanel()),Av(),Rv(),bwoEnsureBidsNav(),bwoEnsureBidsFabItem(),bwoMaintainToolsPage(),await Vg();let t=location.pathname,n=[];t.includes("/market")?(dv(),wv()):t.includes("/league")&&n.push(gv(),yv()),ov(),n.push(Cv(),_v(),kv(),Tv()),await Promise.allSettled(n)}catch(e){console.warn("[biwtools] No se pudo completar el refresco coordinado:",e)}finally{bwoBalanceCycleRunning=!1}}
+var Or=document.createElement("div");Or.id=y1;var zv=Or.attachShadow({mode:"open"}),Fv=document.createElement("style");Fv.textContent=Ov;zv.appendChild(Fv);var qv=document.createElement("div");zv.appendChild(qv);document.body.appendChild(Or);var b1=(0,Dv.createRoot)(qv);b1.render((0,A.jsx)(h1,{}));new MutationObserver(bwoEnsureBidsFabItem).observe(zv,{childList:!0,subtree:!0});Iv();Ef();bwoBindToolsExit();bwoEnsureBidsNav();bwoEnsureBidsFabItem();Bv();bwoRefreshBalances();setInterval(bwoRefreshBalances,1500);setInterval(rv,250);window.addEventListener("scroll",ic,{capture:!0,passive:!0});setInterval(ic,250);Or.style.pointerEvents="auto";function Hv(){bwoEnsureBidsNav(),bwoMaintainToolsPage();let e=document.querySelectorAll(".cdk-overlay-pane"),t=e.length>0?e[e.length-1]:null,n=document.querySelector(".cdk-overlay-container"),r=t??n??document.body;r.lastElementChild!==Or&&r.appendChild(Or)}new MutationObserver(Hv).observe(document.body,{childList:!0,subtree:!0});setInterval(Hv,1e3);})();
 /*! Bundled license information:
 
 react/cjs/react.production.min.js:
