@@ -2335,7 +2335,7 @@ button:focus-visible,
 }
 
 .bwo-fab-menu-version::after {
-  content: "v1.4.0 catálogo de herramientas";
+  content: "v1.4.1 lanzador unificado";
   font-size: 10px;
 }
 
@@ -2506,6 +2506,145 @@ button:focus-visible,
   transform: scale(1.08) rotate(-3deg);
   border-color: rgba(255, 73, 98, 0.42);
 }
+
+/* Lanzador compacto sincronizado con el centro de herramientas. */
+.bwo-fab-menu[data-bwo-modern-version] {
+  width: 320px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100vh - 24px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #4d5563 #151820;
+  scrollbar-width: thin;
+  border-radius: 17px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(240, 45, 73, .17), transparent 34%),
+    linear-gradient(160deg, rgba(28, 33, 43, .995), rgba(14, 17, 23, .995));
+}
+
+.bwo-fab-menu[data-bwo-modern-version] .bwo-fab-menu-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  justify-content: space-between;
+  min-height: 69px;
+  padding: 14px 15px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(240, 45, 73, .025));
+}
+
+.bwo-fab-menu-brand {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.bwo-fab-menu-brand .bwo-fab-menu-wordmark { height: 20px; }
+.bwo-fab-menu-brand small {
+  color: #8f98a8;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.bwo-fab-menu[data-bwo-modern-version] .bwo-fab-menu-version {
+  margin-left: 10px;
+  padding: 5px 8px;
+  color: #f1f3f7;
+  background: rgba(240, 45, 73, .12);
+  border-color: rgba(240, 45, 73, .28);
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.bwo-fab-menu[data-bwo-modern-version] .bwo-fab-menu-version::after { content: none; }
+
+.bwo-fab-menu-section {
+  padding: 9px 15px 6px;
+  color: #788293;
+  background: rgba(0, 0, 0, .11);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.bwo-fab-menu[data-bwo-modern-version] .bwo-fab-item {
+  min-height: 63px;
+  gap: 11px;
+  padding: 9px 14px;
+}
+
+.bwo-fab-menu[data-bwo-modern-version] .bwo-fab-item:hover { padding-left: 17px; }
+.bwo-fab-item-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  text-align: left;
+}
+
+.bwo-fab-item-copy strong {
+  overflow: hidden;
+  max-width: 100%;
+  color: #f7f8fb;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bwo-fab-item-copy small {
+  overflow: hidden;
+  max-width: 100%;
+  color: #8d96a6;
+  font-size: 8.5px;
+  font-weight: 650;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bwo-fab-item-arrow {
+  margin-left: auto;
+  color: #697383;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.bwo-fab-item:hover .bwo-fab-item-arrow {
+  color: #ff4962;
+  transform: translateX(2px);
+}
+
+.bwo-fab-center-open {
+  display: flex;
+  width: 100%;
+  min-height: 59px;
+  padding: 11px 15px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3px;
+  color: #fff;
+  background: linear-gradient(90deg, rgba(240, 45, 73, .18), rgba(240, 45, 73, .07));
+  border: 0;
+  border-top: 1px solid rgba(240, 45, 73, .24);
+  cursor: pointer;
+  font: 850 11px/1.2 var(--bwo-font-body);
+  text-align: left;
+  transition: background 160ms ease;
+}
+
+.bwo-fab-center-open:hover { background: linear-gradient(90deg, rgba(240, 45, 73, .29), rgba(240, 45, 73, .11)); }
+.bwo-fab-center-open small { color: #aeb5c1; font-size: 8.5px; font-weight: 600; }
 
 .bwo-comp-head {
   padding: 16px;
@@ -3264,7 +3403,7 @@ var bwoToolsPageWanted=!1,bwoToolsPagePath=null,bwoToolsExitBound=!1,bwoToolsAct
 function bwoOpenToolFromPage(e){bwoEnterEmbeddedTool(e)}
 function bwoBuildToolsPage(){let e=bwoBidsNode("section","bwo-tools-page-host");e.dataset.bwoToolsPage="1",e.dataset.bwoRuntime=bwoRuntimeToken,e.setAttribute("aria-labelledby","bwo-tools-page-title");let t=bwoBidsNode("header","bwo-tools-page-head"),n=bwoBidsNode("div"),r=bwoBidsNode("span","bwo-tools-page-kicker","Biwtools · Centro de control"),o=bwoBidsNode("h1","bwo-tools-page-title","Herramientas");o.id="bwo-tools-page-title";let a=bwoBidsNode("p","bwo-tools-page-subtitle","Todas las funciones de análisis reunidas en una sección integrada. Elige una herramienta para abrir su información sin abandonar Biwenger."),i=bwoBidsNode("span","bwo-tools-page-count",`${bwoToolsRows.length} herramientas disponibles`);n.append(r,o,a),t.append(n,i);let l=bwoBidsNode("div","bwo-tools-table-wrap"),s=bwoBidsNode("table","bwo-tools-table"),u=bwoBidsNode("thead"),c=bwoBidsNode("tr");for(let E of["","Herramienta","Descripción","Estado",""])c.appendChild(bwoBidsNode("th",null,E));u.appendChild(c);let f=bwoBidsNode("tbody");for(let E of bwoToolsRows){let P=bwoBidsNode("tr"),T=bwoBidsNode("td"),O=bwoBidsNode("span","bwo-tools-page-icon",E.icon);O.setAttribute("aria-hidden","true"),T.appendChild(O);let R=bwoBidsNode("td","bwo-tools-page-name",E.name),F=bwoBidsNode("td",null,E.description),U=bwoBidsNode("td","bwo-tools-page-status","Disponible"),k=bwoBidsNode("td","bwo-tools-page-action"),G=bwoBidsNode("button","bwo-tools-page-open","Abrir");G.type="button",G.setAttribute("aria-label",`Abrir ${E.name}`),G.addEventListener("click",()=>bwoOpenToolFromPage(E.name)),k.appendChild(G),P.append(T,R,F,U,k),f.appendChild(P)}return s.append(u,f),l.appendChild(s),e.append(t,l),e}
 function bwoBuildEmbeddedShell(e){let t=document.querySelector(".bwo-tools-page-host");if(!t)return null;t.querySelector(".bwo-tools-page-head")?.setAttribute("hidden",""),t.querySelector(".bwo-tools-table-wrap")?.setAttribute("hidden",""),t.querySelector(".bwo-tools-detail")?.remove();let n=bwoBidsNode("section","bwo-tools-detail"),r=bwoBidsNode("header","bwo-tools-detail-head"),o=bwoBidsNode("button","bwo-tools-detail-back","← Volver a herramientas");o.type="button",o.addEventListener("click",()=>bwoLeaveEmbeddedTool(!0));let a=bwoBidsNode("h2","bwo-tools-detail-title",e),i=bwoBidsNode("div","bwo-tools-detail-slot"),l=bwoBidsNode("div","bwo-tools-detail-loading",`Cargando ${e}…`);return r.append(o,a),i.appendChild(l),n.append(r,i),t.appendChild(n),Or.classList.add("bwo-tools-embedded"),i.appendChild(Or),n.scrollIntoView({block:"start",behavior:"smooth"}),i}
-function bwoLaunchEmbeddedPanel(e){if(e==="Ver pujas"){bwoOpenBidsPanel();return}let t=zv?.querySelector(".bwo-fab");if(!t)return;zv.querySelector(".bwo-fab-menu")||t.click();let n=0,r=()=>{bwoEnsureBidsFabItem();let o=e.toLocaleLowerCase("es"),a=[...zv.querySelectorAll(".bwo-fab-item")].find(i=>(i.textContent??"").trim().toLocaleLowerCase("es").endsWith(o));if(a){a.click();return}if(++n<40){setTimeout(r,25);return}let i=document.querySelector(".bwo-tools-detail-loading");i&&(i.textContent=`No se pudo abrir ${e}. Vuelve a la tabla e inténtalo de nuevo.`),console.warn(`[biwtools] No se encontró la herramienta ${e} tras esperar su renderizado`)};setTimeout(r,20)}
+function bwoLaunchEmbeddedPanel(e){if(e==="Ver pujas"){bwoOpenBidsPanel();return}let t=zv?.querySelector(".bwo-fab");if(!t)return;zv.querySelector(".bwo-fab-menu")||t.click();let n=0,r=()=>{bwoEnsureBidsFabItem();let o=e.toLocaleLowerCase("es"),a=[...zv.querySelectorAll(".bwo-fab-item")].find(i=>i.dataset.bwoToolName?.toLocaleLowerCase("es")===o||(i.textContent??"").trim().toLocaleLowerCase("es").endsWith(o));if(a){a.click();return}if(++n<40){setTimeout(r,25);return}let i=document.querySelector(".bwo-tools-detail-loading");i&&(i.textContent=`No se pudo abrir ${e}. Vuelve al centro de herramientas e inténtalo de nuevo.`),console.warn(`[biwtools] No se encontró la herramienta ${e} tras esperar su renderizado`)};setTimeout(r,20)}
 function bwoEnterEmbeddedTool(e){if(!bwoToolsPageWanted)return;bwoToolsActiveTool&&bwoLeaveEmbeddedTool(!0),bwoToolsActiveTool=e,bwoToolsEmbedBusy=!0;let t=bwoBuildEmbeddedShell(e);if(!t){bwoToolsActiveTool=null,bwoToolsEmbedBusy=!1;return}document.querySelector(".bwo-tools-overview")?.setAttribute("hidden",""),bwoLaunchEmbeddedPanel(e),setTimeout(()=>{bwoToolsEmbedBusy=!1,bwoWatchEmbeddedTool()},120)}
 function bwoLeaveEmbeddedTool(e=!0){if(!bwoToolsActiveTool&&!Or?.classList.contains("bwo-tools-embedded"))return;bwoToolsEmbedBusy=!0;let t=bwoToolsActiveTool;bwoToolsActiveTool=null;if(e)if(t==="Ver pujas")bwoCloseBidsPanel();else if(zv?.querySelector(".bwo-panel")){let n=zv.querySelector(".bwo-fab");n?.click(),setTimeout(()=>{zv.querySelector(".bwo-fab-menu")&&n?.click()},0)}Or.classList.remove("bwo-tools-embedded"),document.body.appendChild(Or);let n=document.querySelector(".bwo-tools-page-host");n?.querySelector(".bwo-tools-detail")?.remove(),n?.querySelector(".bwo-tools-page-head")?.removeAttribute("hidden"),n?.querySelector(".bwo-tools-table-wrap")?.removeAttribute("hidden"),n?.querySelector(".bwo-tools-overview")?.removeAttribute("hidden"),setTimeout(()=>{bwoToolsEmbedBusy=!1,bwoSyncToolsNavState()},80)}
 function bwoWatchEmbeddedTool(){if(!bwoToolsActiveTool||bwoToolsEmbedBusy)return;let e=!!zv?.querySelector(".bwo-panel, .bwo-bids-panel"),t=!!zv?.querySelector(".bwo-fab-menu");if(e){document.querySelector(".bwo-tools-detail-loading")?.remove();return}!e&&!t&&setTimeout(()=>{bwoToolsActiveTool&&!bwoToolsEmbedBusy&&!zv?.querySelector(".bwo-panel, .bwo-bids-panel, .bwo-fab-menu")&&bwoLeaveEmbeddedTool(!1)},0)}
@@ -3341,7 +3480,7 @@ async function bwoRecommendationRenderUpgrade(e=!1){let t=[...zv.querySelectorAl
 var bwoRecommendationRenderUpgradeCycle=bwoRecommendationRenderUpgrade;
 bwoRecommendationRenderUpgrade=async function(e=!1){let t=[...zv.querySelectorAll(".bwo-comp")].find(r=>(r.querySelector(".bwo-comp-name")?.textContent??"").trim()==="Recomendaciones"),n=t?.querySelector(".bwo-rec-upgrade"),r=t?.querySelector(".bwo-comp-meta");r&&(r.textContent="Mejoras del mercado frente a tu once por puntos, forma, titularidad, calendario y economía");if(!e&&n?.dataset.bwoUpgradeReady==="1"&&Date.now()-bwoRecommendationUpgradeAt<3e4)return;await bwoRecommendationRenderUpgradeCycle(e),t?.querySelector(".bwo-rec-upgrade")?.setAttribute("data-bwo-upgrade-ready","1")};
 var bwoEnhanceRecommendationsUpgradeBase=bwoEnhanceRecommendations;
-bwoEnhanceRecommendations=async function(e=!1){await bwoEnhanceRecommendationsUpgradeBase(e);let t=[...zv.querySelectorAll(".bwo-comp")].find(n=>(n.querySelector(".bwo-comp-name")?.textContent??"").trim()==="Recomendaciones");if(t){let n=t.querySelector(".bwo-comp-meta");n&&(n.textContent="Comparativa completa de tu plantilla contra el mercado actual por forma, puntos Media AS + SofaScore, titularidad, calendario y precio, incluso con saldo negativo."),t.dataset.bwoSmartRecommendations="v1.4.0"}await bwoRecommendationRenderUpgrade(e)};
+bwoEnhanceRecommendations=async function(e=!1){await bwoEnhanceRecommendationsUpgradeBase(e);let t=[...zv.querySelectorAll(".bwo-comp")].find(n=>(n.querySelector(".bwo-comp-name")?.textContent??"").trim()==="Recomendaciones");if(t){let n=t.querySelector(".bwo-comp-meta");n&&(n.textContent="Comparativa completa de tu plantilla contra el mercado actual por forma, puntos Media AS + SofaScore, titularidad, calendario y precio, incluso con saldo negativo."),t.dataset.bwoSmartRecommendations="v1.4.1"}await bwoRecommendationRenderUpgrade(e)};
 
 /* Planificador integrado de Jornada: datos oficiales + previsiones claramente identificadas. */
 var bwoRoundPlannerBusy=!1,bwoRoundPlannerAt=0,bwoRoundPlannerKey="";
@@ -3445,8 +3584,13 @@ var bwoToolsCatalog=[
  {icon:"💰",name:"Finanzas",category:"Economía",status:"Control financiero",tone:"orange",description:"Supervisa saldos, patrimonio, rentabilidad de ventas, capacidad de puja y evolución económica de cada manager.",features:["Beneficio por jugador","Ranking económico","Puja máxima"],source:"Movimientos + plantillas"},
  {icon:"🩺",name:"Diagnóstico",category:"Sistema",status:"Informe técnico",tone:"blue",description:"Verifica integridad del histórico, conciliación de saldos, cobertura de datos, versión activa y sincronización.",features:["Conciliación exacta","Alertas accionables","Estado del sistema"],source:"Auditoría local + API"}
 ];
+function bwoModernizeFabMenu(){let e=zv?.querySelector(".bwo-fab-menu");if(!e)return;let t=e.querySelector(".bwo-fab-menu-version");t&&(t.textContent="v1.4.1",t.setAttribute("aria-label","Biwtools versión 1.4.1"));let n=e.querySelector(".bwo-fab-menu-head");if(n&&!n.querySelector(".bwo-fab-menu-brand")){let p=bwoBidsNode("div","bwo-fab-menu-brand"),y=n.querySelector(".bwo-fab-menu-wordmark"),w=bwoBidsNode("small",null,"Centro de análisis");y&&p.appendChild(y),p.appendChild(w),n.insertBefore(p,t??n.firstChild)}if(!e.querySelector(".bwo-fab-menu-section")){let p=bwoBidsNode("div","bwo-fab-menu-section","Accesos rápidos");n?.insertAdjacentElement("afterend",p)}for(let p of e.querySelectorAll(".bwo-fab-item")){if(p.dataset.bwoFabModern==="1")continue;let y=(p.textContent??"").trim().toLocaleLowerCase("es"),w=bwoToolsCatalog.find(v=>y.includes(v.name.toLocaleLowerCase("es")));if(!w)continue;let m=p.querySelector(".bwo-fab-item-icon")??bwoBidsNode("span","bwo-fab-item-icon",w.icon),d=bwoBidsNode("span","bwo-fab-item-copy"),v=bwoBidsNode("strong",null,w.name),S=bwoBidsNode("small",null,`${w.category} · ${w.status}`),x=bwoBidsNode("span","bwo-fab-item-arrow","›");d.append(v,S),p.replaceChildren(m,d,x),p.dataset.bwoFabModern="1",p.dataset.bwoToolName=w.name,p.title=w.description,p.setAttribute("aria-label",`${w.name}. ${w.description}`)}if(!e.querySelector(".bwo-fab-center-open")){let p=bwoBidsNode("button","bwo-fab-center-open"),y=bwoBidsNode("span",null,"Abrir centro completo"),w=bwoBidsNode("small",null,"Tarjetas, métricas y buscador");p.type="button",p.append(y,w),p.addEventListener("click",()=>{zv.querySelector(".bwo-fab")?.click(),setTimeout(bwoOpenToolsPage,0)}),e.appendChild(p)}e.dataset.bwoModernVersion="1.4.1"}
+var bwoModernizeFabMenuRender=bwoModernizeFabMenu;
+bwoModernizeFabMenu=function(){let e=zv?.querySelector(".bwo-fab-menu");if(!e||e.dataset.bwoModernVersion==="1.4.1")return;return bwoModernizeFabMenuRender()};
+var bwoEnsureBidsFabItemLegacy=bwoEnsureBidsFabItem;
+bwoEnsureBidsFabItem=function(){let e=bwoEnsureBidsFabItemLegacy();return bwoModernizeFabMenu(),e};
 function bwoToolCatalogCard(e){let t=bwoBidsNode("article",`bwo-tool-card tone-${e.tone}${e.featured?" featured":""}`),n=bwoBidsNode("header","bwo-tool-card-head"),r=bwoBidsNode("span","bwo-tool-card-icon",e.icon),o=bwoBidsNode("div","bwo-tool-card-meta"),a=bwoBidsNode("span","bwo-tool-card-category",e.category),i=bwoBidsNode("span","bwo-tool-card-status",e.status);o.append(a,i),n.append(r,o);let l=bwoBidsNode("h3",null,e.name),s=bwoBidsNode("p","bwo-tool-card-description",e.description),u=bwoBidsNode("ul","bwo-tool-card-features");for(let m of e.features)u.appendChild(bwoBidsNode("li",null,m));let c=bwoBidsNode("footer","bwo-tool-card-footer"),f=bwoBidsNode("span","bwo-tool-card-source",e.source),g=bwoBidsNode("button","bwo-tool-card-open","Abrir herramienta →");g.type="button",g.setAttribute("aria-label",`Abrir ${e.name}`),g.addEventListener("click",()=>bwoOpenToolFromPage(e.name)),c.append(f,g),t.append(n,l,s,u,c),t.dataset.bwoToolSearch=`${e.name} ${e.category} ${e.status} ${e.description} ${e.features.join(" ")}`.toLocaleLowerCase("es"),t.dataset.bwoToolCategory=e.category;return t}
-bwoBuildToolsPage=function(){let e=bwoBidsNode("section","bwo-tools-page-host");e.dataset.bwoToolsPage="1",e.dataset.bwoRuntime=bwoRuntimeToken,e.setAttribute("aria-labelledby","bwo-tools-page-title");let t=bwoBidsNode("header","bwo-tools-page-head"),n=bwoBidsNode("div"),r=bwoBidsNode("span","bwo-tools-page-kicker","Biwtools 1.4 · Espacio de análisis"),o=bwoBidsNode("h1","bwo-tools-page-title","Centro de herramientas");o.id="bwo-tools-page-title";let a=bwoBidsNode("p","bwo-tools-page-subtitle","Nueve módulos conectados con tu liga para analizar mercado, rendimiento, plantilla, economía y calidad de datos sin abandonar Biwenger."),i=bwoBidsNode("div","bwo-tools-page-chips");for(let E of["Datos sincronizados","Análisis integrado","Acciones directas"])i.appendChild(bwoBidsNode("span",null,E));n.append(r,o,a,i);let l=bwoBidsNode("span","bwo-tools-page-count",`${bwoToolsCatalog.length} módulos activos`);t.append(n,l);let s=bwoBidsNode("div","bwo-tools-table-wrap bwo-tools-card-wrap"),u=bwoBidsNode("div","bwo-tools-catalog-head"),c=bwoBidsNode("div"),f=bwoBidsNode("h2",null,"Módulos de análisis"),g=bwoBidsNode("p",null,"Selecciona una tarjeta para abrir el informe completo dentro de la aplicación."),b=bwoBidsNode("input","bwo-tools-search");b.type="search",b.placeholder="Buscar herramienta, categoría o función…",b.setAttribute("aria-label","Buscar herramientas"),c.append(f,g),u.append(c,b);let p=bwoBidsNode("div","bwo-tools-card-grid");for(let E of bwoToolsCatalog)p.appendChild(bwoToolCatalogCard(E));let y=bwoBidsNode("p","bwo-tools-empty","No hay herramientas que coincidan con la búsqueda.");y.hidden=!0;s.append(u,p,y),e.append(t,s);function w(){let E=b.value.trim().toLocaleLowerCase("es"),P=0;for(let T of p.children){let O=!E||T.dataset.bwoToolSearch.includes(E);T.hidden=!O,O&&P++}y.hidden=P>0,l.textContent=E?`${P} resultado${P===1?"":"s"}`:`${bwoToolsCatalog.length} módulos activos`}return b.addEventListener("input",w),e};
+bwoBuildToolsPage=function(){let e=bwoBidsNode("section","bwo-tools-page-host");e.dataset.bwoToolsPage="1",e.dataset.bwoRuntime=bwoRuntimeToken,e.setAttribute("aria-labelledby","bwo-tools-page-title");let t=bwoBidsNode("header","bwo-tools-page-head"),n=bwoBidsNode("div"),r=bwoBidsNode("span","bwo-tools-page-kicker","Biwtools 1.4.1 · Espacio de análisis"),o=bwoBidsNode("h1","bwo-tools-page-title","Centro de herramientas");o.id="bwo-tools-page-title";let a=bwoBidsNode("p","bwo-tools-page-subtitle","Nueve módulos conectados con tu liga para analizar mercado, rendimiento, plantilla, economía y calidad de datos sin abandonar Biwenger."),i=bwoBidsNode("div","bwo-tools-page-chips");for(let E of["Datos sincronizados","Análisis integrado","Acciones directas"])i.appendChild(bwoBidsNode("span",null,E));n.append(r,o,a,i);let l=bwoBidsNode("span","bwo-tools-page-count",`${bwoToolsCatalog.length} módulos activos`);t.append(n,l);let s=bwoBidsNode("div","bwo-tools-table-wrap bwo-tools-card-wrap"),u=bwoBidsNode("div","bwo-tools-catalog-head"),c=bwoBidsNode("div"),f=bwoBidsNode("h2",null,"Módulos de análisis"),g=bwoBidsNode("p",null,"Selecciona una tarjeta para abrir el informe completo dentro de la aplicación."),b=bwoBidsNode("input","bwo-tools-search");b.type="search",b.placeholder="Buscar herramienta, categoría o función…",b.setAttribute("aria-label","Buscar herramientas"),c.append(f,g),u.append(c,b);let p=bwoBidsNode("div","bwo-tools-card-grid");for(let E of bwoToolsCatalog)p.appendChild(bwoToolCatalogCard(E));let y=bwoBidsNode("p","bwo-tools-empty","No hay herramientas que coincidan con la búsqueda.");y.hidden=!0;s.append(u,p,y),e.append(t,s);function w(){let E=b.value.trim().toLocaleLowerCase("es"),P=0;for(let T of p.children){let O=!E||T.dataset.bwoToolSearch.includes(E);T.hidden=!O,O&&P++}y.hidden=P>0,l.textContent=E?`${P} resultado${P===1?"":"s"}`:`${bwoToolsCatalog.length} módulos activos`}return b.addEventListener("input",w),e};
 bwoEnsureToolsOverview=function(e){if(e.querySelector(".bwo-tools-overview"))return;let t=bwoBidsNode("section","bwo-tools-overview");t.setAttribute("aria-label","Resumen actualizado de la liga");for(let[n,r,o,a]of[["rivals","👥","Rivales sincronizados","Managers disponibles para los análisis"],["bids","⚖","Pujas observadas","Registros públicos incorporados"],["wins","🏆","Pujas ganadoras","Ofertas rivales que obtuvieron jugador"],["market","↔","Mercado actual","Jugadores anunciados ahora"]]){let i=bwoBidsNode("article","bwo-tools-overview-card"),l=bwoBidsNode("span","bwo-tools-overview-icon",r),s=bwoBidsNode("div"),u=bwoBidsNode("span","bwo-tools-overview-label",o),c=bwoBidsNode("strong","bwo-tools-overview-value","…");c.dataset.bwoOverview=n;let f=bwoBidsNode("small","bwo-tools-overview-note",a);s.append(u,c,f),i.append(l,s),t.appendChild(i)}e.querySelector(".bwo-tools-table-wrap")?.insertAdjacentElement("beforebegin",t),bwoPopulateToolsOverview(e)};
 bwoPopulateToolsOverview=async function(e){if(e.dataset.bwoOverviewLoading==="1")return;e.dataset.bwoOverviewLoading="1";try{let[t,n,r,o]=await Promise.all([og().catch(()=>[]),jf().catch(()=>[]),bwoFetchLiveMarket(!1).catch(()=>null),H().catch(()=>new Map)]),a=null;try{r&&(a=bwoMarketListings(r,o,[]).length)}catch{}a==null&&(a=S0().length||null);let i={rivals:Math.max(0,t.length-1),bids:n.length,wins:n.filter(l=>l.won).length,market:a};for(let[l,s]of Object.entries(i)){let u=e.querySelector(`[data-bwo-overview="${l}"]`);u&&(u.textContent=s==null?"Sin dato":Number(s).toLocaleString("es-ES"))}e.querySelector(".bwo-tools-overview-updated")?.remove();let c=bwoBidsNode("span","bwo-tools-overview-updated",`Actualizado ${new Intl.DateTimeFormat("es-ES",{hour:"2-digit",minute:"2-digit"}).format(new Date)}`);e.querySelector(".bwo-tools-overview")?.appendChild(c)}finally{delete e.dataset.bwoOverviewLoading}};
 
@@ -3462,10 +3606,10 @@ function bwoDiagCheck(e,t,n){return(0,B.jsxs)("li",{className:`bwo-diag-check ${
 function bwoProfessionalDiagnostics({onClose:e,selfId:t}){let[n,r]=(0,Wo.useState)(null),[o,a]=(0,Wo.useState)(null),[i,l]=(0,Wo.useState)(0),[s,u]=(0,Wo.useState)(!1);(0,Wo.useEffect)(()=>{let c=!0;async function f(){try{let[g,b]=await Promise.all([bwoDiagCollect(t),Promise.resolve(Wg())]);c&&(r(g),a(b))}catch(g){console.warn("[biwtools] No se pudo construir el diagnóstico profesional:",g)}}f();let m=setInterval(f,3e3);return()=>{c=!1,clearInterval(m)}},[t,i]);async function c(){u(!0);try{await Vg(0)}catch{}finally{l(f=>f+1),u(!1)}}if(n==null||o==null)return(0,B.jsxs)("div",{className:"bwo-comp",children:[(0,B.jsxs)("div",{className:"bwo-comp-head",children:[(0,B.jsx)("button",{className:"bwo-back",onClick:e,children:"✕ Cerrar"}),(0,B.jsx)("strong",{className:"bwo-comp-name",children:"Diagnóstico"}),(0,B.jsx)("span",{className:"bwo-comp-meta",children:"Auditando datos económicos, histórico y sincronización…"})]}),(0,B.jsx)("p",{className:"bwo-no-movements",children:"Preparando informe técnico…"})]});let f=bwoDiagState(n,o),g=n.currentManager?.balance??null,b=n.currentManager?.maxBid??null,p=n.currentManager?.netWorth??null,y=n.totalMovements?Math.round(n.movementsAfterAnchor/n.totalMovements*100):0,w=[];o.consecutiveFailures>0&&w.push(bwoDiagCheck("bad","Sincronización con errores",`${o.consecutiveFailures} fallo${o.consecutiveFailures===1?"":"s"} consecutivo${o.consecutiveFailures===1?"":"s"}. ${o.lastSyncError??"Reintenta la actualización para recuperar los datos."}`)),!n.historyComplete&&w.push(bwoDiagCheck("warn","Histórico incompleto","Todavía faltan páginas del tablón por incorporar; los saldos rivales pueden ser provisionales.")),!n.rebuildDone&&w.push(bwoDiagCheck("warn","Índices pendientes","La reconstrucción de identificadores estables no ha terminado.")),n.invalidMovements>0&&w.push(bwoDiagCheck("warn","Registros no válidos",`${n.invalidMovements} movimiento${n.invalidMovements===1?"":"s"} sin fecha o importe válido.`)),n.balanceDifference!=null&&Math.abs(n.balanceDifference)>1&&w.push(bwoDiagCheck("warn","Conciliación con diferencia",`El saldo reconstruido difiere ${Kg(Math.abs(n.balanceDifference))} del saldo actual. Actualiza para recalcular la corrección individual.`)),w.length===0&&w.push(bwoDiagCheck("good","Todas las comprobaciones superadas","Histórico, conciliación económica, identificadores y sincronización están en estado correcto."));return(0,B.jsxs)("div",{className:"bwo-comp bwo-diag-professional",children:[(0,B.jsxs)("div",{className:"bwo-comp-head",children:[(0,B.jsx)("button",{className:"bwo-back",onClick:e,children:"✕ Cerrar"}),(0,B.jsx)("strong",{className:"bwo-comp-name",children:"Diagnóstico"}),(0,B.jsx)("span",{className:"bwo-comp-meta",children:"Informe técnico de integridad, conciliación económica y calidad de datos"})]}),(0,B.jsxs)("div",{className:"bwo-diag-pro",children:[(0,B.jsxs)("section",{className:"bwo-diag-hero",children:[(0,B.jsxs)("div",{children:[(0,B.jsx)("span",{className:"bwo-diag-eyebrow",children:"BIWTOOLS · SYSTEM HEALTH"}),(0,B.jsx)("h2",{children:"Centro de diagnóstico"}),(0,B.jsx)("p",{children:"Comprueba de forma transparente qué datos están disponibles, cómo se reconstruye tu saldo y si existe alguna incidencia que pueda afectar a los cálculos."})]}),(0,B.jsxs)("div",{className:"bwo-diag-hero-actions",children:[(0,B.jsx)("span",{className:`bwo-diag-status ${f.tone}`,children:f.label}),(0,B.jsx)("button",{type:"button",onClick:c,disabled:s,children:s?"Actualizando…":"Actualizar y conciliar"})]})]}),(0,B.jsxs)("div",{className:"bwo-diag-kpis",children:[bwoDiagKpi("Versión","v1.3.0","Diagnóstico profesional","good"),bwoDiagKpi("Conciliación",n.balanceDifference==null?"Sin dato":n.balanceDifference===0?"Exacta":Kg(n.balanceDifference),n.balanceDifference===0?"0 € de diferencia":"Saldo real frente al reconstruido",n.balanceDifference===0?"good":"warn"),bwoDiagKpi("Movimientos útiles",String(n.movementsAfterAnchor),`${y}% del histórico almacenado`),bwoDiagKpi("Última sincronización",bwoDiagElapsed(o.lastSyncAt),o.syncing?"Proceso en curso":`${o.consecutiveFailures} fallos consecutivos`,o.consecutiveFailures?"bad":"good")]}),(0,B.jsxs)("div",{className:"bwo-diag-pro-grid",children:[bwoDiagBlock("Conciliación económica","Desglose reproducible del saldo actual.",(0,B.jsxs)("div",{children:[bwoDiagLine("Saldo inicial",Kg(n.startingBalance)),bwoDiagLine("Ingresos desde el ancla",n.income==null?"—":Kg(n.income),"good"),bwoDiagLine("Gastos desde el ancla",n.expenses==null?"—":`−${Kg(n.expenses)}`,"bad"),bwoDiagLine("Neto de movimientos",n.myNet==null?"—":Kg(n.myNet),n.myNet>=0?"good":"bad"),bwoDiagLine("Corrección individual",Kg(n.balanceCorrection),n.balanceCorrection===0?"":"warn"),bwoDiagLine("Saldo reconstruido",n.calculatedBalance==null?"—":Kg(n.calculatedBalance),"emphasis"),bwoDiagLine("Saldo actual Biwenger",g==null?"—":Kg(g),"emphasis")] })),bwoDiagBlock("Capacidad financiera","Situación económica utilizada por mercado y recomendaciones.",(0,B.jsxs)("div",{children:[bwoDiagLine("Saldo disponible",g==null?"—":Kg(g),g!=null&&g<0?"bad":"good"),bwoDiagLine("Puja máxima",b==null?"—":Kg(b),"good"),bwoDiagLine("Patrimonio",p==null?"—":Kg(p)),bwoDiagLine("Movimientos propios",String(n.myMovements)),bwoDiagLine("Método de cálculo",n.exactDisabled?"Ancla común + corrección":"Saldos iniciales individuales"),bwoDiagLine("Fecha de anclaje",bwoDiagDate(n.anchor))]})),bwoDiagBlock("Cobertura del histórico","Alcance y calidad del registro local sincronizado.",(0,B.jsxs)("div",{children:[bwoDiagLine("Movimientos almacenados",String(n.totalMovements)),bwoDiagLine("Posteriores al ancla",String(n.movementsAfterAnchor)),bwoDiagLine("Managers cubiertos",`${n.managersCovered}/${n.managerCount}`),bwoDiagLine("Primer movimiento útil",bwoDiagDate(n.firstMovementAt)),bwoDiagLine("Último movimiento útil",bwoDiagDate(n.lastMovementAt)),bwoDiagLine("Registros inválidos",String(n.invalidMovements),n.invalidMovements?"bad":"good"),bwoDiagLine("Histórico completo",n.historyComplete?"Sí":"Pendiente",n.historyComplete?"good":"warn")]})),bwoDiagBlock("Motor de sincronización","Estado de actualización y preparación interna.",(0,B.jsxs)("div",{children:[bwoDiagLine("Estado",o.syncing?"Sincronizando":"En reposo",o.syncing?"info":"good"),bwoDiagLine("Último intento",bwoDiagElapsed(o.lastSyncAt)),bwoDiagLine("Fallos consecutivos",String(o.consecutiveFailures),o.consecutiveFailures?"bad":"good"),bwoDiagLine("IDs estables",n.rebuildDone?"Reconstruidos":"Pendientes",n.rebuildDone?"good":"warn"),bwoDiagLine("Instancia del bundle",globalThis.__BIWTOOLS_ACTIVE_RUNTIME__?.startsWith("v1.3.0")?"Única y activa":"En verificación",globalThis.__BIWTOOLS_ACTIVE_RUNTIME__?.startsWith("v1.3.0")?"good":"warn"),bwoDiagLine("Ruta actual",location.pathname)]}))]}),bwoDiagBlock("Incidencias y recomendaciones","Solo se muestran problemas que pueden afectar a la fiabilidad de los datos.",(0,B.jsx)("ul",{className:"bwo-diag-checks",children:w}),"wide"),(0,B.jsxs)("footer",{className:"bwo-diag-footer",children:[(0,B.jsx)("span",{children:"Fuente primaria: API y tablón oficial de Biwenger. El diagnóstico no modifica saldos manualmente."}),(0,B.jsx)("button",{type:"button",onClick:()=>l(m=>m+1),children:"Recalcular informe"})]})]})]})}
 tc=bwoProfessionalDiagnostics;
 var bwoDiagKpiVersionBase=bwoDiagKpi,bwoDiagLineRuntimeBase=bwoDiagLine;
-bwoDiagKpi=function(e,t,n,r=""){return bwoDiagKpiVersionBase(e,e==="Versión"?"v1.4.0":t,n,r)};
+bwoDiagKpi=function(e,t,n,r=""){return bwoDiagKpiVersionBase(e,e==="Versión"?"v1.4.1":t,n,r)};
 bwoDiagLine=function(e,t,n=""){return e==="Instancia del bundle"?bwoDiagLineRuntimeBase(e,"Única y activa","good"):bwoDiagLineRuntimeBase(e,t,n)};
 
-globalThis.__BIWTOOLS_BALANCE_FIX__="v1.4.0-tools-card-catalog";
+globalThis.__BIWTOOLS_BALANCE_FIX__="v1.4.1-unified-launcher";
 var bwoOriginalZw=zw;
 Ri=async function(){let{state:e}=await z(),{date:t,startingBalance:n}=await qo(),r=e.balanceCorrections??{};return Object.values(e.players).filter(o=>!e.inactive[o.id]).map(o=>{let a=e.movements.filter(i=>i.player_id===o.id&&i.occurred_at>t).reduce((i,l)=>i+l.amount,0),s=Number(r[o.id]??0),u=n+a+s,c=e.teamValue[o.id];return{id:o.id,name:o.name,icon:o.icon,team_value:c?.teamValue??null,squad_size:c?.squadSize??null,team_value_change_today:c?.changeToday??null,balance:u,balance_exact:Object.prototype.hasOwnProperty.call(r,o.id)}}).sort((o,a)=>a.balance-o.balance)};
 zw=async function(){let e=await z(),t=e.state.syncState,n=t.seasonAnchorDate??null,r=t.seasonStartingBalance??null,o;try{o=await bwoOriginalZw()}catch(a){if(n!=null&&r!=null){t.seasonAnchorDate=n,t.seasonStartingBalance=r,await Cu()}throw a}let i=await z(),l=i.state.syncState,s=await Li(),u=(await qo()).date,c=await rg(s.id,u);i.state.balanceCorrections??={};if(n===u&&r!=null)l.seasonAnchorDate=n,l.seasonStartingBalance=r,l.seasonStartingBalanceLockedV3="1";else i.state.balanceCorrections={},l.seasonStartingBalanceLockedV3="1";let f=Number(l.seasonStartingBalance??0);return i.state.balanceCorrections[String(s.id)]=Math.round(s.balance-(f+c)),await Cu(),o};
@@ -3478,7 +3622,7 @@ function bwoReadSessionKey(){try{return ke()+"|"+xu()}catch{return null}}
 async function bwoRefreshBalances(){if(bwoBalanceCycleRunning)return;bwoBalanceCycleRunning=!0;try{let e=bwoReadSessionKey();e&&e!==bwoSessionKey&&(bwoSessionKey=e,Ju=0,Ti=null,Wi=null,bwoCloseBidsPanel()),Av(),Rv(),bwoEnsureBidsNav(),bwoEnsureBidsFabItem(),bwoMaintainToolsPage(),await Vg();let t=location.pathname,n=[];t.includes("/market")?(dv(),wv()):t.includes("/league")&&n.push(gv(),yv()),ov(),n.push(Cv(),_v(),kv(),Tv()),await Promise.allSettled(n)}catch(e){console.warn("[biwtools] No se pudo completar el refresco coordinado:",e)}finally{bwoBalanceCycleRunning=!1}}
 var bwoOriginalRefreshWithRoundPlanner=bwoRefreshBalances;
 bwoRefreshBalances=async function(){await bwoOriginalRefreshWithRoundPlanner(),await bwoEnhanceRoundPlanner().catch(e=>console.warn("[biwtools] No se pudo actualizar Jornada:",e)),await bwoEnhanceRecommendations().catch(e=>console.warn("[biwtools] No se pudieron actualizar Recomendaciones:",e))};
-var bwoRuntimeToken=`v1.4.0-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+var bwoRuntimeToken=`v1.4.1-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 globalThis.__BIWTOOLS_ACTIVE_RUNTIME__=bwoRuntimeToken;
 function bwoRuntimeActive(){return globalThis.__BIWTOOLS_ACTIVE_RUNTIME__===bwoRuntimeToken}
 function bwoRemoveLegacyRuntime(e=!1){if(!bwoRuntimeActive())return;if(e&&document.querySelector(".bwo-tools-page-host")){let t=[...document.querySelectorAll("[data-bwo-tools-nav='1']")].find(n=>n.dataset.bwoRuntime!==bwoRuntimeToken),n=t?.matches("a")?t:t?.querySelector("a");try{n?.click()}catch{}}document.querySelectorAll("#biwtools-root").forEach(t=>{if(typeof Or!="undefined"&&t===Or)return;t.classList.add("bwo-tools-embedded"),t.setAttribute("aria-hidden","true"),t.remove()}),document.querySelectorAll("[data-bwo-tools-nav='1']").forEach(t=>{t.dataset.bwoRuntime===bwoRuntimeToken||t.remove()}),document.querySelectorAll(".bwo-tools-page-host").forEach(t=>{t.dataset.bwoRuntime===bwoRuntimeToken||t.remove()});let t=document.querySelector(`.bwo-tools-page-host[data-bwo-runtime="${bwoRuntimeToken}"]`);(e||!t)&&document.querySelectorAll("[data-bwo-tools-hidden='1']").forEach(n=>n.removeAttribute("data-bwo-tools-hidden"))}
