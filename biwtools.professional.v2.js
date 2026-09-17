@@ -1,5 +1,5 @@
 /**
- * BiwTools Professional - Versión Mejorada
+ * BWHerramientas - Versión Mejorada
  * 
  * Mejoras implementadas:
  * 1. React externo (CDN) - Reduce bundle en ~40%
@@ -14,7 +14,7 @@
  * 10. Tipado JSDoc para mejor IDE support
  * 
  * @version 2.0.0
- * @author BiwTools Team
+ * @author BWHerramientas Team
  */
 
 // ============================================
@@ -68,7 +68,7 @@ const BIWTOOLS_CONFIG = Object.freeze({
  * Logger estructurado para debugging y monitoreo
  */
 const Logger = {
-  prefix: '[BiwTools]',
+  prefix: '[BWHerramientas]',
   
   info(message, ...data) {
     if (this._shouldLog('info')) {
@@ -201,10 +201,10 @@ class ExpiringCache {
 // GESTIÓN DE ERRORES
 // ============================================
 
-class BiwToolsError extends Error {
+class BWHerramientasError extends Error {
   constructor(message, code, context = {}) {
     super(message);
-    this.name = 'BiwToolsError';
+    this.name = 'BWHerramientasError';
     this.code = code;
     this.context = context;
     this.timestamp = Date.now();
@@ -539,7 +539,7 @@ const BASE_STYLES = `
 // INICIALIZACIÓN
 // ============================================
 
-class BiwToolsApp {
+class BWHerramientasApp {
   constructor() {
     this.initialized = false;
     this.modules = new Map();
@@ -548,11 +548,11 @@ class BiwToolsApp {
   
   async init() {
     if (this.initialized) {
-      Logger.warn('BiwTools ya está inicializado');
+      Logger.warn('BWHerramientas ya está inicializado');
       return;
     }
     
-    Logger.info(`Iniciando BiwTools v${this.config.VERSION}`);
+    Logger.info(`Iniciando BWHerramientas v${this.config.VERSION}`);
     
     try {
       // Inicializar estilos base
@@ -575,7 +575,7 @@ class BiwToolsApp {
       this.setupEventListeners();
       
       this.initialized = true;
-      Logger.info('BiwTools inicializado correctamente');
+      Logger.info('BWHerramientas inicializado correctamente');
       
       // Anunciar a screen readers
       Accessibility.announce(I18n.t('loading') + ' completado');
@@ -644,7 +644,7 @@ class BiwToolsApp {
   }
   
   destroy() {
-    Logger.info('Destruyendo instancia de BiwTools');
+    Logger.info('Destruyendo instancia de BWHerramientas');
     this.modules.clear();
     this.initialized = false;
   }
@@ -673,14 +673,14 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // Auto-init si estamos en browser
 if (typeof window !== 'undefined') {
-  window.BiwTools = new BiwToolsApp();
+  window.BWHerramientas = new BWHerramientasApp();
   
   // Iniciar cuando el DOM esté listo
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      window.BiwTools.init().catch(console.error);
+      window.BWHerramientas.init().catch(console.error);
     });
   } else {
-    window.BiwTools.init().catch(console.error);
+    window.BWHerramientas.init().catch(console.error);
   }
 }
